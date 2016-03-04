@@ -8,6 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import utilities.Log;
@@ -26,9 +27,10 @@ public class MainController implements Initializable{
     private Canvas canvas; // Value injected by FXMLLoader
     @FXML
     private Button buttonSelect;
-
     @FXML
     private AnchorPane canvasHolder;
+    @FXML
+    private Pane paneCanvas;
 
     public void initialize(URL location, ResourceBundle resources) {
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
@@ -37,7 +39,7 @@ public class MainController implements Initializable{
 
         // initialize your logic here: all @FXML variables will have been injected
         initCanvas();
-
+        initPaneCanvas();
         // Register the action handlers here
         buttonSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -45,12 +47,13 @@ public class MainController implements Initializable{
                 drawOnCanvas();
             }
         });
-
-        System.out.println("Controller loaded!");
     }
 
+    private void initPaneCanvas(){
+        paneCanvas.getStyleClass().add("canvas");
+    }
     private void initCanvas(){
-        canvasHolder.setStyle("-fx-background-color: white");
+        canvasHolder.getStyleClass().add("main_panel");
     }
 
     private void drawOnCanvas(){

@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private static final String THEME_BLACK = "/css/styles_black.css";
+    private static final String THEME_LIGHT = "/css/styles_light.css";
     Button button;
 
     @Override
@@ -17,7 +19,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         // add styles to main.fxml
-        root.getStylesheets().add("/css/styles.css");
+        root.getStylesheets().add(THEME_LIGHT);
 
         // create a window
         Scene scene = new Scene(root, 800, 500);

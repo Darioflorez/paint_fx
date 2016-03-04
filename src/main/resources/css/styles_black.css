@@ -1,0 +1,22 @@
+.root {
+    -fx-background-color: #36394c;
+}
+
+.button{
+
+}
+
+.main_panel {
+    -fx-background-color: #282a36;
+}
+
+.canvas {
+    -fx-background-color: #fefdff;
+    -fx-background-radius: 1.0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 0, 0, 5, 5);
+}
+
+
+.separator .line {
+    -fx-background: #282a36;
+}

@@ -1,1 +1,2 @@
-This is an JavaFx project
+# Paint Fx
+This is a JavaFx project

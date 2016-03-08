@@ -50,12 +50,12 @@
                         <HBox BorderPane.alignment="CENTER">
                            <children>
             
-                                            <Button mnemonicParsing="false" text="Fill">
+                                            <Button fx:id="buttonFill" mnemonicParsing="false" text="Fill">
                                  <HBox.margin>
                                     <Insets left="20.0" right="20.0" top="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button mnemonicParsing="false" text="Delete">
+                              <Button fx:id="buttonDelete" mnemonicParsing="false" text="Delete">
                                  <HBox.margin>
                                     <Insets right="20.0" top="20.0" />
                                  </HBox.margin>

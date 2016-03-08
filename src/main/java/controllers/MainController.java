@@ -12,12 +12,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Shape;
 import utilities.Log;
 
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -30,14 +28,19 @@ public class MainController implements Initializable{
     @FXML //  fx:id="canvas"
     private Canvas canvas; // Value injected by FXMLLoader
     @FXML
-    private Button buttonSelect;
-    @FXML
-    private Button buttonLineWidth;
-
-    @FXML
     private AnchorPane canvasHolder;
     @FXML
     private Pane paneCanvas;
+
+    // Tools buttons
+    @FXML
+    private Button buttonSelect;
+    @FXML
+    private Button buttonLineWidth;
+    @FXML
+    private Button buttonDelete;
+    @FXML
+    private Button buttonFill;
     @FXML
     private ColorPicker colorPicker;
 
@@ -50,15 +53,16 @@ public class MainController implements Initializable{
     private Shape buttonSquare;
 
     //GraphicContext is used to draw on the canvas
-    GraphicsContext gc;
+    private GraphicsContext gc;
 
     // Figure Properties
-    private Color color;
+    private Color colorSelected;
     private int lineWidth;
 
 
 
     public void initialize(URL location, ResourceBundle resources) {
+        // asset the ui elements
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
         assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
@@ -68,21 +72,37 @@ public class MainController implements Initializable{
         // Add css to the canvas so it looks like a piece of paper
         styleCanvas();
 
-        // Init the default values used for the drawing shapes; t.ex color
+        // Init the default values used for the drawing shapes; t.ex colorSelected
         initDefaultValues();
 
         gc = canvas.getGraphicsContext2D();
 
         // Register the action handlers here
+        // ==========================Tools===========================
         buttonSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 Log.i("Button Select Clicked!");
-                drawOnCanvas();
+            }
+        });
+
+        buttonLineWidth.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                Log.i("Button Line width Clicked!");
+            }
+        });
+
+        buttonFill.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                Log.i("Button Fill Clicked!");
             }
         });
 
 
-
+        buttonDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                Log.i("Button Delete Clicked!");
+            }
+        });
         // ==========================Shapes===========================
         buttonCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -105,13 +125,12 @@ public class MainController implements Initializable{
             }
         });
 
-
-
+        // ========================Color picker========================
         colorPicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                color = colorPicker.getValue();
-                Log.i("Color Selected: " + color);
+                colorSelected = colorPicker.getValue();
+                Log.i("Color Selected: " + colorSelected);
             }
         });
     }
@@ -124,41 +143,14 @@ public class MainController implements Initializable{
         canvasHolder.getStyleClass().add("main_panel");
     }
 
-    private void drawOnCanvas(){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        drawShape(gc);
-    }
-
-    private void drawShape(GraphicsContext gc){
-
-//        gc.setLineWidth(5);
-//        gc.strokeLine(40, 10, 10, 40);
-//        gc.fillOval(10, 60, 30, 30);
-//        gc.strokeOval(60, 60, 30, 30);
-//        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-//        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-//        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-//        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-//        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-//        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-//        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-//        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-//        gc.fillPolygon(new double[]{10, 40, 10, 40},
-//                new double[]{210, 210, 240, 240}, 4);
-//        gc.strokePolygon(new double[]{60, 90, 60, 90},
-//                new double[]{210, 210, 240, 240}, 4);
-//        gc.strokePolyline(new double[]{110, 140, 110, 140},
-//                new double[]{210, 210, 240, 240}, 4);
-    }
-
     // Call every time the user change the properties of the figure
     private void updateGraphicContext(){
 
     }
 
     private void initDefaultValues(){
-        if(color == null){
-            color = Color.BLACK;
+        if(colorSelected == null){
+            colorSelected = Color.BLACK;
         }
         if (lineWidth == 0 ){
             lineWidth = 5;
@@ -174,7 +166,7 @@ public class MainController implements Initializable{
         gc.strokeOval(30, 30, 80, 80); // (x, y, width, high)
 
         // Draw a fill circle
-        gc.setFill(color);
+        gc.setFill(colorSelected);
         gc.fillOval(30, 30, 80, 80); // (x, y, width, high)
 
     }
@@ -197,7 +189,7 @@ public class MainController implements Initializable{
         gc.fillRect(120, 30, 80, 80);
 
         // Draw a fill square
-        gc.setFill(color);
+        gc.setFill(colorSelected);
         gc.strokeRect(120, 30, 80, 80);
     }
 

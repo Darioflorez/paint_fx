@@ -168,31 +168,37 @@ public class MainController implements Initializable{
     private void drawCircle(GraphicsContext gc){
         Log.i("DRAW CIRCLE");
 
-        gc.setFill(Color.GOLD);
-        gc.setLineWidth(10);
-        gc.setStroke(color);
-        gc.fillOval(10, 60, 30, 30);
+        // Draw the edges of a line
+        gc.setLineWidth(lineWidth); // The width of the line
+        gc.setStroke(Color.BLACK);
+        gc.strokeOval(30, 30, 80, 80); // (x, y, width, high)
+
+        // Draw a fill circle
+        gc.setFill(color);
+        gc.fillOval(30, 30, 80, 80); // (x, y, width, high)
 
     }
 
     private void drawLine(GraphicsContext gc){
         Log.i("DRAW LINE");
 
-        gc.setFill(Color.RED);
-        gc.setLineWidth(10);
-        gc.setStroke(color);
-        gc.fillOval(10, 60, 30, 40);
+        gc.setFill(Color.GOLD);
+        gc.setLineWidth(lineWidth);
+        gc.strokeLine(220,100,240,100); // (x1, y1, x2, y2)
 
     }
 
     private void drawSquare(GraphicsContext gc){
         Log.i("DRAW SQUARE");
 
-        gc.setFill(Color.BLACK);
-        gc.setLineWidth(10);
-        gc.setStroke(color);
-        gc.fillOval(10, 60, 30, 50);
-        gc.fillOval(10, 60, 30, 50);
+        // Draw the edges of a line
+        gc.setLineWidth(lineWidth); // The width of the line
+        gc.setStroke(Color.BLACK);
+        gc.fillRect(120, 30, 80, 80);
+
+        // Draw a fill square
+        gc.setFill(color);
+        gc.strokeRect(120, 30, 80, 80);
     }
 
 }

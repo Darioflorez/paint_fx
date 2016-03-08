@@ -2,41 +2,41 @@
 
 # Om Applikationen
 
-Anv�ndaren ska kunna rita olika typer av objekt:
+Användaren ska kunna rita olika typer av objekt:
 * linjer
 * Ovaler
-* Flerh�rningar
-Genom att v�lja typ fr�n en meny eller knappsats.
+* Flerhörningar
+Genom att välja typ från en meny eller knappsats.
 
-Anv�ndaren ska kunna v�lja ett objekt f�r att:
+Användaren ska kunna välja ett objekt för att:
 * Ta bort
-* �ndra egenskaper
+* Ändra egenskaper
 
 Objekt egenskaper:
-* F�rg
+* Färg
 * Linjebredd
-* Fyllning (av/p�)
+* Fyllning (av/på)
 
-Det ska vara m�jlig att spara och l�sa in filer med ritningar
+Det ska vara möjlig att spara och läsa in filer med ritningar
 
 # Om implementationen
 
-programmet vara skrivet utifr�n de objektorienterade principer som inkapsling, h�g kohesion, l�g koppling, programmering mot interface (till skillnad
-fr�n programmering mot implementationer) m.fl. principer.
+programmet vara skrivet utifrån de objektorienterade principer som inkapsling, hög kohesion, låg koppling, programmering mot interface (till skillnad
+från programmering mot implementationer) m.fl. principer.
 
-Applikationen vara skriven med fokus p� att g�ra det l�tt att i efterhand utveckla programmet;
-De ska vara relativt enkelt att l�gga till nya 
+Applikationen vara skriven med fokus på att göra det lätt att i efterhand utveckla programmet;
+De ska vara relativt enkelt att lägga till nya 
 * vyer med altenentiva presentationer av modellen
 * ritbara typer
 
-Designm�nster att anv�nda:
-* Model-View-Controller (separata paket f�r de olika delarna)
-* Subject-Observer, t.ex. f�r att uppdatera olika delvyer d� modellen �ndrats
-* Command f�r att implementera undo/redo-funktionalitet
+Designmönster att använda:
+* Model-View-Controller (separata paket för de olika delarna)
+* Subject-Observer, t.ex. för att uppdatera olika delvyer då modellen ändrats
+* Command för att implementera undo/redo-funktionalitet
 * Template-metoder
-* Fa�ade, t.ex. f�r att d�lja komplexitet i modellen
-* N�gon form av skapelsem�nster f�r att skapa de ritbara objekten, ex. Prototype
-* N�gon form av automatisk uppdatering av de knappar eller menyalternativ utifr�n vilka
-ritbara typer som finns i modellen (t.ex. genom att unders�ka vilka abstract factory-metoder
+* Facade, t.ex. för att dölja komplexitet i modellen
+* Någon form av skapelsemönster för att skapa de ritbara objekten, ex. Prototype
+* Någon form av automatisk uppdatering av de knappar eller menyalternativ utifrån vilka
+ritbara typer som finns i modellen (t.ex. genom att undersöka vilka abstract factory-metoder
 som finns i modellen)
 

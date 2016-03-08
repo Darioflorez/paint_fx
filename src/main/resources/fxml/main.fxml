@@ -36,27 +36,6 @@
             <HBox>
                <!-- ===============================Buttons===================================== -->
                 <children>
-                  <Button fx:id="buttonSelect" mnemonicParsing="false" text="Select">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </HBox.margin></Button>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-
-                    <Button mnemonicParsing="false" text="Fill">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </HBox.margin></Button>
-                  <Button mnemonicParsing="false" text="Delete">
-                     <HBox.margin>
-                        <Insets right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="buttonLineWidth" mnemonicParsing="false" text="B">
-                     <HBox.margin>
-                        <Insets right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </Button>
-                    <Separator orientation="VERTICAL" prefHeight="200.0" />
 
                   <GridPane>
                     <rowConstraints>
@@ -66,17 +45,39 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-
-                  <ColorPicker fx:id="colorPicker">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </ColorPicker>
-                  <Separator orientation="VERTICAL" prefHeight="200.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Separator>
+                  <BorderPane>
+                     <center>
+                        <HBox BorderPane.alignment="CENTER">
+                           <children>
+            
+                                            <Button mnemonicParsing="false" text="Fill">
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button mnemonicParsing="false" text="Delete">
+                                 <HBox.margin>
+                                    <Insets right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="buttonLineWidth" mnemonicParsing="false" text="B">
+                                 <HBox.margin>
+                                    <Insets right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="buttonSelect" mnemonicParsing="false" text="Select">
+                                 <HBox.margin>
+                                    <Insets right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </center>
+                     <bottom>
+                        <Label text="Tools" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <BorderPane>
                      <center>
                         <HBox prefHeight="65.0" prefWidth="152.0" BorderPane.alignment="CENTER">
@@ -108,6 +109,24 @@
                      </bottom>
                   </BorderPane>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <BorderPane>
+                     <center>
+      
+                        <ColorPicker fx:id="colorPicker" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </BorderPane.margin>
+                        </ColorPicker>
+                     </center>
+                     <bottom>
+                        <Label text="Colors" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Separator>
 
                 </children>
             </HBox>

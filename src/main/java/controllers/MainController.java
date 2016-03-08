@@ -13,6 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
+import javafx.scene.shape.Shape;
 import utilities.Log;
 
 import java.net.URL;
@@ -31,13 +32,26 @@ public class MainController implements Initializable{
     @FXML
     private Button buttonSelect;
     @FXML
+    private Button buttonLineWidth;
+
+    @FXML
     private AnchorPane canvasHolder;
     @FXML
     private Pane paneCanvas;
     @FXML
     private ColorPicker colorPicker;
 
+    // Button Shapes
+    @FXML
+    private Shape buttonCircle;
+    @FXML
+    private Shape buttonLine;
+    @FXML
+    private Shape buttonSquare;
+
+    // Figure Properties
     private Color color;
+    private int lineWidth;
 
 
 
@@ -53,6 +67,13 @@ public class MainController implements Initializable{
         buttonSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 Log.i("Button Select Clicked!");
+                drawOnCanvas();
+            }
+        });
+
+        buttonCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
                 drawOnCanvas();
             }
         });
@@ -83,27 +104,44 @@ public class MainController implements Initializable{
             Log.i("COLOR WAS NULL!");
             color = Color.BLACK;
         }
+        if (lineWidth == 0 ){
+            lineWidth = 5;
+        }
 
         gc.setFill(Color.GOLD);
         gc.setStroke(color);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
         gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-        gc.fillPolygon(new double[]{10, 40, 10, 40},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolygon(new double[]{60, 90, 60, 90},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolyline(new double[]{110, 140, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);
+
+//        gc.setLineWidth(5);
+//        gc.strokeLine(40, 10, 10, 40);
+//        gc.fillOval(10, 60, 30, 30);
+//        gc.strokeOval(60, 60, 30, 30);
+//        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
+//        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
+//        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
+//        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
+//        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
+//        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
+//        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
+//        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
+//        gc.fillPolygon(new double[]{10, 40, 10, 40},
+//                new double[]{210, 210, 240, 240}, 4);
+//        gc.strokePolygon(new double[]{60, 90, 60, 90},
+//                new double[]{210, 210, 240, 240}, 4);
+//        gc.strokePolyline(new double[]{110, 140, 110, 140},
+//                new double[]{210, 210, 240, 240}, 4);
+    }
+
+    private void drawCircle(){
+
+    }
+
+    private void drawLine(){
+
+    }
+
+    private void drawSquare(){
+
     }
 
 }

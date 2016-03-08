@@ -46,6 +46,16 @@
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin></Button>
+                  <Button mnemonicParsing="false" text="Delete">
+                     <HBox.margin>
+                        <Insets right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="buttonLineWidth" mnemonicParsing="false" text="B">
+                     <HBox.margin>
+                        <Insets right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Button>
                     <Separator orientation="VERTICAL" prefHeight="200.0" />
 
                   <GridPane>
@@ -63,6 +73,26 @@
                      </HBox.margin>
                   </ColorPicker>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <Circle fx:id="buttonCircle" fill="DODGERBLUE" radius="11.0" stroke="BLACK" strokeType="INSIDE">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Circle>
+                  <Line fx:id="ButtonLine" endX="-15.0" startX="10.0" startY="20.0">
+                     <HBox.margin>
+                        <Insets bottom="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Line>
+                  <Rectangle fx:id="buttonSquare" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="22.0" stroke="BLACK" strokeType="INSIDE" width="21.0">
+                     <HBox.margin>
+                        <Insets right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Rectangle>
+                  <Separator orientation="VERTICAL" prefHeight="200.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </Separator>
 
                 </children>
             </HBox>

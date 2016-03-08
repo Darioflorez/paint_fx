@@ -72,27 +72,42 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
                   </ColorPicker>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Circle fx:id="buttonCircle" fill="DODGERBLUE" radius="11.0" stroke="BLACK" strokeType="INSIDE">
-                     <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </Circle>
-                  <Line fx:id="ButtonLine" endX="-15.0" startX="10.0" startY="20.0">
-                     <HBox.margin>
-                        <Insets bottom="20.0" right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </Line>
-                  <Rectangle fx:id="buttonSquare" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="22.0" stroke="BLACK" strokeType="INSIDE" width="21.0">
-                     <HBox.margin>
-                        <Insets right="20.0" top="20.0" />
-                     </HBox.margin>
-                  </Rectangle>
                   <Separator orientation="VERTICAL" prefHeight="200.0">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Separator>
+                  <BorderPane>
+                     <center>
+                        <HBox prefHeight="65.0" prefWidth="152.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Circle fx:id="buttonCircle" fill="WHITE" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Circle>
+                              <Line fx:id="buttonLine" endX="10.0" endY="5.0" startX="-15.0" startY="25.0" strokeWidth="3.0">
+                                 <HBox.margin>
+                                    <Insets bottom="20.0" right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </Line>
+                              <Rectangle fx:id="buttonSquare" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="22.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="21.0">
+                                 <HBox.margin>
+                                    <Insets top="20.0" />
+                                 </HBox.margin>
+                              </Rectangle>
+                           </children>
+                        </HBox>
+                     </center>
+                     <bottom>
+                        <Label text="Shapes" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets />
+                           </BorderPane.margin>
+                        </Label>
+                     </bottom>
+                  </BorderPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
 
                 </children>
             </HBox>

@@ -49,6 +49,9 @@ public class MainController implements Initializable{
     @FXML
     private Shape buttonSquare;
 
+    //GraphicContext is used to draw on the canvas
+    GraphicsContext gc;
+
     // Figure Properties
     private Color color;
     private int lineWidth;
@@ -61,8 +64,15 @@ public class MainController implements Initializable{
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
 
         // initialize your logic here: all @FXML variables will have been injected
-        initCanvas();
-        initPaneCanvas();
+
+        // Add css to the canvas so it looks like a piece of paper
+        styleCanvas();
+
+        // Init the default values used for the drawing shapes; t.ex color
+        initDefaultValues();
+
+        gc = canvas.getGraphicsContext2D();
+
         // Register the action handlers here
         buttonSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
@@ -71,12 +81,31 @@ public class MainController implements Initializable{
             }
         });
 
+
+
+        // ==========================Shapes===========================
         buttonCircle.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                drawOnCanvas();
+                drawCircle(gc);
             }
         });
+
+        buttonSquare.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                drawSquare(gc);
+            }
+        });
+
+        buttonLine.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                drawLine(gc);
+            }
+        });
+
+
 
         colorPicker.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -87,10 +116,11 @@ public class MainController implements Initializable{
         });
     }
 
-    private void initPaneCanvas(){
+
+    private void styleCanvas(){
+        // Add css to canvas
         paneCanvas.getStyleClass().add("canvas");
-    }
-    private void initCanvas(){
+        // Add css to the panel that hold the canvas
         canvasHolder.getStyleClass().add("main_panel");
     }
 
@@ -100,17 +130,6 @@ public class MainController implements Initializable{
     }
 
     private void drawShape(GraphicsContext gc){
-        if(color == null){
-            Log.i("COLOR WAS NULL!");
-            color = Color.BLACK;
-        }
-        if (lineWidth == 0 ){
-            lineWidth = 5;
-        }
-
-        gc.setFill(Color.GOLD);
-        gc.setStroke(color);
-        gc.fillOval(10, 60, 30, 30);
 
 //        gc.setLineWidth(5);
 //        gc.strokeLine(40, 10, 10, 40);
@@ -132,16 +151,48 @@ public class MainController implements Initializable{
 //                new double[]{210, 210, 240, 240}, 4);
     }
 
-    private void drawCircle(){
+    // Call every time the user change the properties of the figure
+    private void updateGraphicContext(){
 
     }
 
-    private void drawLine(){
+    private void initDefaultValues(){
+        if(color == null){
+            color = Color.BLACK;
+        }
+        if (lineWidth == 0 ){
+            lineWidth = 5;
+        }
+    }
+
+    private void drawCircle(GraphicsContext gc){
+        Log.i("DRAW CIRCLE");
+
+        gc.setFill(Color.GOLD);
+        gc.setLineWidth(10);
+        gc.setStroke(color);
+        gc.fillOval(10, 60, 30, 30);
 
     }
 
-    private void drawSquare(){
+    private void drawLine(GraphicsContext gc){
+        Log.i("DRAW LINE");
 
+        gc.setFill(Color.RED);
+        gc.setLineWidth(10);
+        gc.setStroke(color);
+        gc.fillOval(10, 60, 30, 40);
+
+    }
+
+    private void drawSquare(GraphicsContext gc){
+        Log.i("DRAW SQUARE");
+
+        gc.setFill(Color.BLACK);
+        gc.setLineWidth(10);
+        gc.setStroke(color);
+        gc.fillOval(10, 60, 30, 50);
+        gc.fillOval(10, 60, 30, 50);
     }
 
 }

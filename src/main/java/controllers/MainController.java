@@ -1,11 +1,13 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -14,6 +16,7 @@ import javafx.scene.shape.ArcType;
 import utilities.Log;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -31,6 +34,12 @@ public class MainController implements Initializable{
     private AnchorPane canvasHolder;
     @FXML
     private Pane paneCanvas;
+    @FXML
+    private ColorPicker colorPicker;
+
+    private Color color;
+
+
 
     public void initialize(URL location, ResourceBundle resources) {
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
@@ -45,6 +54,14 @@ public class MainController implements Initializable{
             public void handle(MouseEvent event) {
                 Log.i("Button Select Clicked!");
                 drawOnCanvas();
+            }
+        });
+
+        colorPicker.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                color = colorPicker.getValue();
+                Log.i("Color Selected: " + color);
             }
         });
     }
@@ -62,8 +79,13 @@ public class MainController implements Initializable{
     }
 
     private void drawShape(GraphicsContext gc){
-        gc.setFill(Color.BLUE);
-        gc.setStroke(Color.GOLD);
+        if(color == null){
+            Log.i("COLOR WAS NULL!");
+            color = Color.BLACK;
+        }
+
+        gc.setFill(Color.GOLD);
+        gc.setStroke(color);
         gc.setLineWidth(5);
         gc.strokeLine(40, 10, 10, 40);
         gc.fillOval(10, 60, 30, 30);

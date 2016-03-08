@@ -1,0 +1,46 @@
+.root {
+    -fx-background-color: #cc99cc;
+}
+
+.button{
+
+}
+
+.main_panel {
+    -fx-background-color: #660066;
+}
+
+.canvas {
+    -fx-background-color: #fefdff;
+    -fx-background-radius: 1.0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 0, 0, 5, 5);
+}
+
+
+.separator .line {
+    -fx-background: #cc99cc;
+}
+
+/*.root {*/
+    /*-fx-background-color: #7E8F7C;*/
+/*}*/
+
+/*.button{*/
+   /*!* -fx-background-color: #D9853B;*!*/
+
+/*}*/
+
+/*.main_panel {*/
+    /*-fx-background-color: #3B3738;*/
+/*}*/
+
+/*.canvas {*/
+    /*-fx-background-color: #FDF3E7;*/
+    /*-fx-background-radius: 1.0;*/
+    /*-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 0, 0, 5, 5);*/
+/*}*/
+
+
+/*.separator .line {*/
+    /*-fx-background: #7E8F7C;*/
+/*}*/

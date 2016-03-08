@@ -34,17 +34,20 @@
               </menus>
             </MenuBar>
             <HBox>
-               <children>
+               <!-- ===============================Buttons===================================== -->
+                <children>
                   <Button fx:id="buttonSelect" mnemonicParsing="false" text="Select">
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin></Button>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <Button mnemonicParsing="false" text="Fill">
+
+                    <Button mnemonicParsing="false" text="Fill">
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin></Button>
-                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                    <Separator orientation="VERTICAL" prefHeight="200.0" />
+
                   <GridPane>
                     <rowConstraints>
                       <RowConstraints />
@@ -53,13 +56,15 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                   </GridPane>
-                  <ColorPicker>
+
+                  <ColorPicker fx:id="colorPicker">
                      <HBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </HBox.margin>
                   </ColorPicker>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-               </children>
+
+                </children>
             </HBox>
          </children>
       </VBox>

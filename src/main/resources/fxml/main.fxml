@@ -111,12 +111,24 @@
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <BorderPane>
                      <center>
-      
-                        <ColorPicker fx:id="colorPicker" BorderPane.alignment="CENTER">
-                           <BorderPane.margin>
-                              <Insets left="20.0" right="20.0" />
-                           </BorderPane.margin>
-                        </ColorPicker>
+                        <HBox>
+                           <children>
+            
+                                          <ColorPicker fx:id="colorPickerStroke" BorderPane.alignment="CENTER">
+                                 <BorderPane.margin>
+                                    <Insets left="20.0" right="20.0" />
+                                 </BorderPane.margin>
+                                 <HBox.margin>
+                                    <Insets left="20.0" right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </ColorPicker>
+                              <ColorPicker fx:id="colorPickerFill">
+                                 <HBox.margin>
+                                    <Insets right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </ColorPicker>
+                           </children>
+                        </HBox>
                      </center>
                      <bottom>
                         <Label text="Colors" BorderPane.alignment="CENTER" />

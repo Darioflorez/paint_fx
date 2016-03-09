@@ -85,25 +85,42 @@
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
                   <BorderPane>
                      <center>
-                        <HBox prefHeight="65.0" prefWidth="152.0" BorderPane.alignment="CENTER">
-                           <children>
-                              <Circle fx:id="buttonCircle" fill="WHITE" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0">
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                                 </HBox.margin>
-                              </Circle>
-                              <Line fx:id="buttonLine" endX="10.0" endY="5.0" startX="-15.0" startY="25.0" strokeWidth="3.0">
-                                 <HBox.margin>
-                                    <Insets bottom="20.0" right="20.0" top="20.0" />
-                                 </HBox.margin>
-                              </Line>
-                              <Rectangle fx:id="buttonSquare" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="22.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="21.0">
-                                 <HBox.margin>
-                                    <Insets top="20.0" />
-                                 </HBox.margin>
-                              </Rectangle>
-                           </children>
-                        </HBox>
+                        <ScrollPane prefViewportHeight="65.0" prefViewportWidth="149.0">
+                           <content>
+                              <HBox prefHeight="65.0" prefWidth="152.0" BorderPane.alignment="CENTER">
+                                 <children>
+                                    <Circle fx:id="buttonCircle" fill="WHITE" radius="11.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0">
+                                       <HBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Circle>
+                                    <Line fx:id="buttonLine" endX="10.0" endY="5.0" startX="-15.0" startY="25.0" strokeWidth="3.0">
+                                       <HBox.margin>
+                                          <Insets bottom="20.0" right="20.0" top="20.0" />
+                                       </HBox.margin>
+                                    </Line>
+                                    <Rectangle fx:id="buttonSquare" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="22.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="3.0" width="21.0">
+                                       <HBox.margin>
+                                          <Insets top="20.0" />
+                                       </HBox.margin>
+                                    </Rectangle>
+                                    <Polygon fill="DODGERBLUE" layoutX="20.0" layoutY="21.0" stroke="BLACK" strokeType="INSIDE">
+                                      <points>
+                                        <Double fx:value="-50.0" />
+                                        <Double fx:value="40.0" />
+                                        <Double fx:value="50.0" />
+                                        <Double fx:value="40.0" />
+                                        <Double fx:value="0.0" />
+                                        <Double fx:value="-60.0" />
+                                      </points>
+                                       <HBox.margin>
+                                          <Insets top="20.0" />
+                                       </HBox.margin>
+                                    </Polygon>
+                                 </children>
+                              </HBox>
+                           </content>
+                        </ScrollPane>
                      </center>
                      <bottom>
                         <Label text="Shapes" BorderPane.alignment="CENTER">

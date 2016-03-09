@@ -8,50 +8,55 @@ import javafx.scene.paint.Color;
  */
 public class Attribute {
 
-    private int x, y, lineWWidth;
+    private double x;
+    private double y;
+    private int lineWidth;
     private boolean fill;
     private Color colorStroke;
     private Color colorFill;
+    private String id;
 
-    public Attribute(int x, int Y, int lineWWidth, Color colorStroke, Color colorFill){
+    public Attribute(double x, double Y, int lineWidth, Color colorStroke, Color colorFill){
         this.x = x;
         this.y = Y;
         this.fill = true;
-        this.lineWWidth = lineWWidth;
+        this.lineWidth = lineWidth;
         this.colorStroke = colorStroke;
         this.colorFill = colorFill;
+        this.id = "";
     }
 
-    public Attribute(int x, int y, int lineWWidth, Color colorStroke) {
+    public Attribute(double x, double y, int lineWidth, Color colorStroke) {
         this.x = x;
         this.y = y;
-        this.lineWWidth = lineWWidth;
+        this.lineWidth = lineWidth;
         this.colorStroke = colorStroke;
         this.fill = false;
+        this.id = "";
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public int getLineWWidth() {
-        return lineWWidth;
+    public int getLineWidth() {
+        return lineWidth;
     }
 
-    public void setLineWWidth(int lineWWidth) {
-        this.lineWWidth = lineWWidth;
+    public void setLineWidth(int lineWidth) {
+        this.lineWidth = lineWidth;
     }
 
     public boolean isFill() {
@@ -76,5 +81,13 @@ public class Attribute {
 
     public void setColorFill(Color colorFill) {
         this.colorFill = colorFill;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

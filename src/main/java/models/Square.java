@@ -17,13 +17,13 @@ public class Square extends Shape {
     @Override
     public void draw(GraphicsContext gc) {
 
-        gc.setLineWidth(this.attribute.getLineWWidth()); // The width of the line
+        gc.setLineWidth(this.attribute.getLineWidth()); // The width of the line
         gc.setStroke(this.attribute.getColorStroke());
-        gc.fillRect(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
+        gc.strokeRect(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
 
         // Draw a fill square
         gc.setFill(this.attribute.getColorFill());
-        gc.strokeRect(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
+        gc.fillRect(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
 
     }
 }

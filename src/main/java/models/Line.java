@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class Line extends Shape{
 
-    int x2, y2;
+    double x2, y2;
 
     public Line(Attribute attr){
         super(attr);
@@ -17,7 +17,7 @@ public class Line extends Shape{
     @Override
     public void draw(GraphicsContext gc) {
         gc.setFill(this.attribute.getColorFill());
-        gc.setLineWidth(this.attribute.getLineWWidth());
+        gc.setLineWidth(this.attribute.getLineWidth());
         gc.strokeLine(this.attribute.getX(), this.attribute.getY(), this.x2, this.y2); // (x1, y1, x2, y2)
     }
 }

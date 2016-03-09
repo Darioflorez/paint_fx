@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -72,6 +74,10 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     public Attribute attr;
 
 
+    //=============================================
+    private final String[] lineSize = new String[]{"Line size", "1", "5", "10", "15", "20"};
+
+
 
     public void initialize(URL location, ResourceBundle resources) {
         // asset the ui elements
@@ -119,7 +125,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
                 Log.i("Color Fill: " + attr.getColorFill());
             }
         });
-
         // ======================== Canvas =================================
 //        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
 //                new EventHandler<MouseEvent>() {
@@ -129,6 +134,23 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 //                    }
 //                });
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+        // ======================== ChoiceBox =============================
+        choiceBox.setItems(FXCollections.observableArrayList(lineSize));
+        choiceBox.setValue("Line size");
+        choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Log.i(lineSize[newValue.intValue()]);
+                attr.setLineWidth(Integer.parseInt(lineSize[newValue.intValue()]));
+            }
+        });
+
+        // ======================= Update new buttons ======================
+//        Button button = new Button();
+//        button.setText("Polygon");
+
+
     }
 
 
@@ -147,7 +169,11 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     }
 
     private void initDefaultValues(){
-        this.attr = new Attribute(30,30,5,Color.BLACK, Color.WHITE); // X, Y, lineWidth, colorStroke, colorFill
+        colorPickerFill.setValue(Color.WHITE);
+        colorPickerStroke.setValue(Color.BLACK);
+        this.attr = new Attribute(30,30,5,
+                colorPickerStroke.getValue(),
+                colorPickerFill.getValue()); // X, Y, lineWidth, colorStroke, colorFill
     }
 
     //================================ Actions ================================
@@ -171,6 +197,9 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
                 Log.i("DRAW ON CANVAS!");
                 double x = event.getX();
                 double y = event.getY();
+                attr.setX(x);
+                attr.setY(y);
+                paint.draw(attr);
                 Log.i("Canvas X: " + x + " Y: " + y);
                 break;
             case "buttonSelect":
@@ -187,15 +216,19 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
                 break;
             case "buttonCircle":
                 Log.i("DRAW CIRCLE!");
-                this.paint.drawCircle(this.attr);
+                //shape = "circle";
+                //this.paint.drawCircle(this.attr);
+                attr.setId("circle");
                 break;
             case "buttonSquare":
                 Log.i("DRAW SQUARE!");
-                this.paint.drawSquare(this.attr);
+                //this.paint.drawSquare(this.attr);
+                attr.setId("square");
                 break;
             case "buttonLine":
                 Log.i("DRAW LINE!");
-                this.paint.drawLine(this.attr);
+                //this.paint.drawLine(this.attr);
+                attr.setId("line");
                 break;
             default:
                 break;

@@ -11,7 +11,7 @@ public abstract class Shape {
     public Attribute attribute;
 
     public Shape(Attribute attr){
-        this.attribute = attr;
+        attribute = attr;
     }
 
     public abstract void draw(GraphicsContext gc);

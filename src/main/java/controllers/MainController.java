@@ -38,10 +38,10 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private Pane paneCanvas;
 
     // Tools buttons
-    @FXML
-    private Button buttonSelect;
-    @FXML
-    private Button buttonLineWidth;
+//    @FXML
+//    private Button buttonSelect;
+//    @FXML
+//    private Button buttonLineWidth;
     @FXML
     private Button buttonDelete;
     @FXML
@@ -52,6 +52,8 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private ColorPicker colorPickerFill;
     @FXML
     private ChoiceBox choiceBox;
+    @FXML
+    private ChoiceBox choiceBoxShapes;
 
     // Button Shapes
     @FXML
@@ -76,13 +78,14 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
     //=============================================
     private final String[] lineSize = new String[]{"Line size", "1", "5", "10", "15", "20"};
+    private final String[] shapesList = new String[]{"Shapes", "circle", "square", "line"};
 
 
 
     public void initialize(URL location, ResourceBundle resources) {
         // asset the ui elements
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
-        assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
+        //assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
         assert choiceBox != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
@@ -95,19 +98,19 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         initDefaultValues();
         // Register the action handlers here
         // ==========================Tools===========================
-        buttonSelect.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-
-        buttonLineWidth.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+//        buttonSelect.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+//
+//        buttonLineWidth.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
         // ==========================Shapes===========================
-        buttonCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-
-        buttonSquare.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-
-        buttonLine.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+//        buttonCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+//
+//        buttonSquare.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+//
+//        buttonLine.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         // ========================Color picker========================
         colorPickerStroke.setOnAction(new EventHandler<ActionEvent>() {
@@ -137,12 +140,22 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
         // ======================== ChoiceBox =============================
         choiceBox.setItems(FXCollections.observableArrayList(lineSize));
-        choiceBox.setValue("Line size");
+        choiceBox.setValue(lineSize[0]);
         choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 Log.i(lineSize[newValue.intValue()]);
                 attr.setLineWidth(Integer.parseInt(lineSize[newValue.intValue()]));
+            }
+        });
+
+        choiceBoxShapes.setItems(FXCollections.observableArrayList(shapesList));
+        choiceBoxShapes.setValue(shapesList[0]);
+        choiceBoxShapes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                Log.i(shapesList[newValue.intValue()]);
+                attr.setId(shapesList[newValue.intValue()]);
             }
         });
 
@@ -214,22 +227,22 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
             case "buttonFill":
                 Log.i("Button FILL Clicked!");
                 break;
-            case "buttonCircle":
-                Log.i("DRAW CIRCLE!");
-                //shape = "circle";
-                //this.paint.drawCircle(this.attr);
-                attr.setId("circle");
-                break;
-            case "buttonSquare":
-                Log.i("DRAW SQUARE!");
-                //this.paint.drawSquare(this.attr);
-                attr.setId("square");
-                break;
-            case "buttonLine":
-                Log.i("DRAW LINE!");
-                //this.paint.drawLine(this.attr);
-                attr.setId("line");
-                break;
+//            case "buttonCircle":
+//                Log.i("DRAW CIRCLE!");
+//                //shape = "circle";
+//                //this.paint.drawCircle(this.attr);
+//                attr.setId("circle");
+//                break;
+//            case "buttonSquare":
+//                Log.i("DRAW SQUARE!");
+//                //this.paint.drawSquare(this.attr);
+//                attr.setId("square");
+//                break;
+//            case "buttonLine":
+//                Log.i("DRAW LINE!");
+//                //this.paint.drawLine(this.attr);
+//                attr.setId("line");
+//                break;
             default:
                 break;
         }

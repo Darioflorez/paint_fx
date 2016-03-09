@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -7,9 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Control;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -24,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * Created by dario on 2016-03-04.
  */
-public class MainController implements Initializable, EventHandler<Event>{
+public class MainController implements Initializable, EventHandler<MouseEvent>{
 
 
     // Declare all the components of the .fxml file you want to control
@@ -48,6 +47,8 @@ public class MainController implements Initializable, EventHandler<Event>{
     private ColorPicker colorPickerStroke;
     @FXML
     private ColorPicker colorPickerFill;
+    @FXML
+    private ChoiceBox choiceBox;
 
     // Button Shapes
     @FXML
@@ -75,7 +76,7 @@ public class MainController implements Initializable, EventHandler<Event>{
         assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
         assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
-
+        assert choiceBox != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
         paint = new Paint();
 
@@ -84,8 +85,6 @@ public class MainController implements Initializable, EventHandler<Event>{
 
         // Init the default values used for the drawing shapes; t.ex colorStroke
         initDefaultValues();
-
-        gc = canvas.getGraphicsContext2D();
 
         // Register the action handlers here
         // ==========================Tools===========================
@@ -119,14 +118,26 @@ public class MainController implements Initializable, EventHandler<Event>{
                 Log.i("Color Fill: " + colorFill);
             }
         });
+
+        // ======================== Canvas =================================
+//        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+//                new EventHandler<MouseEvent>() {
+//                    @Override
+//                    public void handle(MouseEvent e) {
+//                        gc.strokeRect(e.getX() - 2, e.getY() - 2, 5, 5);
+//                    }
+//                });
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
     }
 
 
     private void styleCanvas(){
-        // Add css to canvas
-        paneCanvas.getStyleClass().add("canvas");
+        Log.i("CANVAS HOLDER X: " + canvasHolder.widthProperty() +  " Y: " + canvasHolder.heightProperty());
         // Add css to the panel that hold the canvas
         canvasHolder.getStyleClass().add("main_panel");
+        // Add css to canvas
+        paneCanvas.setPrefSize(canvasHolder.getWidth(), canvasHolder.getHeight());
+        paneCanvas.getStyleClass().add("canvas");
     }
 
     // Call every time the user change the properties of the figure
@@ -135,24 +146,28 @@ public class MainController implements Initializable, EventHandler<Event>{
     }
 
     private void initDefaultValues(){
+        gc = canvas.getGraphicsContext2D();
         colorStroke = Color.BLACK;
         colorPickerStroke.setValue(colorStroke);
         colorFill = Color.WHITE;
         colorPickerFill.setValue(colorFill);
         lineWidth = 5;
+        choiceBox.setItems(FXCollections.observableArrayList(
+                "Line size", "1", "5 ", "10", "15", "20"));
+        choiceBox.setValue("Line size");
     }
 
-    private void drawCircle(GraphicsContext gc){
+    private void drawCircle(GraphicsContext gc, double x, double y){
         Log.i("DRAW CIRCLE");
 
         // Draw the edges of a line
         gc.setLineWidth(lineWidth); // The width of the line
         gc.setStroke(colorStroke);
-        gc.strokeOval(30, 30, 80, 80); // (x, y, width, high)
+        gc.strokeOval(x, y, 80, 80); // (x, y, width, high)
 
         // Draw a fill circle
         gc.setFill(colorFill);
-        gc.fillOval(30, 30, 80, 80); // (x, y, width, high)
+        gc.fillOval(x, y, 80, 80); // (x, y, width, high)
 
     }
 
@@ -171,16 +186,16 @@ public class MainController implements Initializable, EventHandler<Event>{
         // Draw the edges of a line
         gc.setLineWidth(lineWidth); // The width of the line
         gc.setStroke(colorStroke);
-        gc.fillRect(120, 30, 80, 80);
+        gc.fillRect(30, 30, 80, 80);
 
         // Draw a fill square
         gc.setFill(colorFill);
-        gc.strokeRect(120, 30, 80, 80);
+        gc.strokeRect(30, 30, 80, 80);
     }
 
     //================================ Actions ================================
     @Override
-    public void handle(Event event) {
+    public void handle(MouseEvent event) {
         String evt = "";
         if(event.getSource() instanceof Shape){
             evt = ((Shape)event.getSource()).getId();
@@ -190,7 +205,18 @@ public class MainController implements Initializable, EventHandler<Event>{
             evt = ((Control)event.getSource()).getId();
             //Log.i( ((Control)event.getSource()).getId() );
         }
+        else if (event.getSource() instanceof Canvas){
+            evt = ((Canvas)event.getSource()).getId();
+            //Log.i(((Canvas)event.getSource()).getId());
+        }
         switch (evt) {
+            case "canvas":
+                Log.i("DRAW ON CANVAS!");
+                double x = event.getX();
+                double y = event.getY();
+                Log.i("Canvas X: " + x + " Y: " + y);
+                drawCircle(gc, x, y);
+                break;
             case "buttonSelect":
                 Log.i("Button Select Clicked!");
                 break;
@@ -205,7 +231,7 @@ public class MainController implements Initializable, EventHandler<Event>{
                 break;
             case "buttonCircle":
                 Log.i("DRAW CIRCLE!");
-                drawCircle(gc);
+                drawCircle(gc, 0,0);
                 break;
             case "buttonSquare":
                 Log.i("DRAW SQUARE!");

@@ -65,6 +65,11 @@
                                     <Insets right="20.0" top="20.0" />
                                  </HBox.margin>
                               </Button>
+                              <ChoiceBox fx:id="choiceBox">
+                                 <HBox.margin>
+                                    <Insets right="20.0" top="20.0" />
+                                 </HBox.margin>
+                              </ChoiceBox>
                               <Button fx:id="buttonSelect" mnemonicParsing="false" text="Select">
                                  <HBox.margin>
                                     <Insets right="20.0" top="20.0" />
@@ -134,11 +139,6 @@
                         <Label text="Colors" BorderPane.alignment="CENTER" />
                      </bottom>
                   </BorderPane>
-                  <Separator orientation="VERTICAL" prefHeight="200.0">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Separator>
 
                 </children>
             </HBox>
@@ -146,17 +146,25 @@
       </VBox>
    </top>
    <center>
-      <AnchorPane fx:id="canvasHolder">
+
+       <AnchorPane fx:id="canvasHolder">
          <children>
             <Pane fx:id="paneCanvas" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                <children>
-                  <Canvas fx:id="canvas" height="393.0" width="661.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Canvas fx:id="canvas" height="393.0" width="661.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <rotationAxis>
+                        <Point3D />
+                     </rotationAxis></Canvas>
                </children>
+               <rotationAxis>
+                  <Point3D />
+               </rotationAxis>
             </Pane>
          </children>
          <BorderPane.margin>
             <Insets />
          </BorderPane.margin>
       </AnchorPane>
+
    </center>
 </BorderPane>

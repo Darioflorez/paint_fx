@@ -18,17 +18,19 @@ public class Paint {
     // Figure Properties
     private Color colorSelected;
     private int lineWidth;
+    private GraphicsContext gc;
 
-    public Paint(){
-
+    public Paint(GraphicsContext gc){
+        this.gc = gc;
     }
 
 
     // Actions; What the user can do with the appliation
-    public void drawCircle(GraphicsContext gc){
+    public void drawCircle(Attribute attr){
         Log.i("DRAW CIRCLE");
 
         // Draw the edges of a line
+        /*
         gc.setLineWidth(lineWidth); // The width of the line
         gc.setStroke(Color.BLACK);
         gc.strokeOval(30, 30, 80, 80); // (x, y, width, high)
@@ -36,22 +38,31 @@ public class Paint {
         // Draw a fill circle
         gc.setFill(colorSelected);
         gc.fillOval(30, 30, 80, 80); // (x, y, width, high)
+        */
+
+        Circonference circle = new Circonference(attr);
+        circle.draw(this.gc);
 
     }
 
-    public void drawLine(GraphicsContext gc){
+    public void drawLine(Attribute attr){
         Log.i("DRAW LINE");
 
+        /*
         gc.setFill(Color.GOLD);
         gc.setLineWidth(lineWidth);
         gc.strokeLine(220,100,240,100); // (x1, y1, x2, y2)
+        */
 
+        Line line = new Line(attr);
+        line.draw(this.gc);
     }
 
-    public void drawSquare(GraphicsContext gc){
+    public void drawSquare(Attribute attr){
         Log.i("DRAW SQUARE");
 
         // Draw the edges of a line
+        /*
         gc.setLineWidth(lineWidth); // The width of the line
         gc.setStroke(Color.BLACK);
         gc.fillRect(120, 30, 80, 80);
@@ -59,6 +70,10 @@ public class Paint {
         // Draw a fill square
         gc.setFill(colorSelected);
         gc.strokeRect(120, 30, 80, 80);
+        */
+        Square sqr = new Square(attr);
+        sqr.draw(this.gc);
+
     }
 
 }

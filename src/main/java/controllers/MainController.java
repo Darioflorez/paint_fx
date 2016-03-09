@@ -13,8 +13,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
-import models.Paint;
+import models.*;
 import utilities.Log;
 
 import java.net.URL;
@@ -59,15 +60,16 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private Shape buttonSquare;
 
     //GraphicContext is used to draw on the canvas
-    private GraphicsContext gc;
+    /*private GraphicsContext gc;
 
     // Figure Properties
     private Color colorStroke;
     private Color colorFill;
     private int lineWidth;
-
+    */
 
     private Paint paint;
+    public Attribute attr;
 
 
 
@@ -78,14 +80,13 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
         assert choiceBox != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
-        paint = new Paint();
+        paint = new Paint(canvas.getGraphicsContext2D());
 
         // Add css to the canvas so it looks like a piece of paper
         styleCanvas();
 
         // Init the default values used for the drawing shapes; t.ex colorStroke
         initDefaultValues();
-
         // Register the action handlers here
         // ==========================Tools===========================
         buttonSelect.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
@@ -106,16 +107,16 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         colorPickerStroke.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                colorStroke = colorPickerStroke.getValue();
-                Log.i("Color Stroke: " + colorStroke);
+                attr.setColorStroke(colorPickerStroke.getValue());
+                Log.i("Color Stroke: " + attr.getColorStroke());
             }
         });
 
         colorPickerFill.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                colorFill = colorPickerFill.getValue();
-                Log.i("Color Fill: " + colorFill);
+                attr.setColorFill(colorPickerFill.getValue());
+                Log.i("Color Fill: " + attr.getColorFill());
             }
         });
 
@@ -142,55 +143,11 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
     // Call every time the user change the properties of the figure
     private void updateGraphicContext(){
-
+        // Update Attribute object here!!
     }
 
     private void initDefaultValues(){
-        gc = canvas.getGraphicsContext2D();
-        colorStroke = Color.BLACK;
-        colorPickerStroke.setValue(colorStroke);
-        colorFill = Color.WHITE;
-        colorPickerFill.setValue(colorFill);
-        lineWidth = 5;
-        choiceBox.setItems(FXCollections.observableArrayList(
-                "Line size", "1", "5 ", "10", "15", "20"));
-        choiceBox.setValue("Line size");
-    }
-
-    private void drawCircle(GraphicsContext gc, double x, double y){
-        Log.i("DRAW CIRCLE");
-
-        // Draw the edges of a line
-        gc.setLineWidth(lineWidth); // The width of the line
-        gc.setStroke(colorStroke);
-        gc.strokeOval(x, y, 80, 80); // (x, y, width, high)
-
-        // Draw a fill circle
-        gc.setFill(colorFill);
-        gc.fillOval(x, y, 80, 80); // (x, y, width, high)
-
-    }
-
-    private void drawLine(GraphicsContext gc){
-        Log.i("DRAW LINE");
-
-        gc.setFill(colorFill);
-        gc.setLineWidth(lineWidth);
-        gc.strokeLine(220,100,240,100); // (x1, y1, x2, y2)
-
-    }
-
-    private void drawSquare(GraphicsContext gc){
-        Log.i("DRAW SQUARE");
-
-        // Draw the edges of a line
-        gc.setLineWidth(lineWidth); // The width of the line
-        gc.setStroke(colorStroke);
-        gc.fillRect(30, 30, 80, 80);
-
-        // Draw a fill square
-        gc.setFill(colorFill);
-        gc.strokeRect(30, 30, 80, 80);
+        this.attr = new Attribute(30,30,5,Color.BLACK, Color.WHITE); // X, Y, lineWidth, colorStroke, colorFill
     }
 
     //================================ Actions ================================
@@ -215,7 +172,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
                 double x = event.getX();
                 double y = event.getY();
                 Log.i("Canvas X: " + x + " Y: " + y);
-                drawCircle(gc, x, y);
                 break;
             case "buttonSelect":
                 Log.i("Button Select Clicked!");
@@ -231,15 +187,15 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
                 break;
             case "buttonCircle":
                 Log.i("DRAW CIRCLE!");
-                drawCircle(gc, 0,0);
+                this.paint.drawCircle(this.attr);
                 break;
             case "buttonSquare":
                 Log.i("DRAW SQUARE!");
-                drawSquare(gc);
+                this.paint.drawSquare(this.attr);
                 break;
             case "buttonLine":
                 Log.i("DRAW LINE!");
-                drawLine(gc);
+                this.paint.drawLine(this.attr);
                 break;
             default:
                 break;

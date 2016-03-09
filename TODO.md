@@ -3,9 +3,9 @@
 # Om Applikationen
 
 Användaren ska kunna rita olika typer av objekt:
-* ~linjer~
-* ~Ovaler~
-* ~Flerhörningar~
+* ~~linjer~~
+* ~~Ovaler~~
+* ~~Flerhörningar~~
 Genom att välja typ från en meny eller knappsats.
 
 Användaren ska kunna välja ett objekt för att:
@@ -13,9 +13,9 @@ Användaren ska kunna välja ett objekt för att:
 * Ändra egenskaper
 
 Objekt egenskaper:
-* ~Färg~
-* ~Linjebredd~
-* ~Fyllning (av/på)~
+* ~~Färg~~
+* ~~Linjebredd~~
+* ~~Fyllning (av/på)~~
 
 Det ska vara möjlig att spara och läsa in filer med ritningar
 
@@ -30,7 +30,7 @@ De ska vara relativt enkelt att lägga till nya
 * ritbara typer
 
 Designmönster att använda:
-* ~Model-View-Controller (separata paket för de olika delarna)~
+* ~~Model-View-Controller (separata paket för de olika delarna)~~
 * Subject-Observer, t.ex. för att uppdatera olika delvyer då modellen ändrats
 * Command för att implementera undo/redo-funktionalitet
 * Template-metoder

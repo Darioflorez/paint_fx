@@ -1,12 +1,7 @@
 package models;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Control;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import utilities.Log;
 
 /**
  * Created by dario on 2016-03-08.
@@ -25,6 +20,9 @@ public class Paint {
     }
 
     public void draw(Attribute attr){
+        /*TODO:
+        *   Make a for loop that look that match actions with
+        * */
         switch (attr.getId()){
             case "circle":
                 //Log.i("CIRCLE: " + " STROKE: "+ attr.getColorStroke() + " FILL: "+ attr.getColorFill());

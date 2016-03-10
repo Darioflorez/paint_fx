@@ -4,20 +4,18 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import models.*;
+import uiComponents.ResizableCanvas;
 import utilities.Log;
 
 import java.net.URL;
@@ -28,20 +26,21 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable, EventHandler<MouseEvent>{
 
+    private final String[] lineSize = new String[]{"Line size", "1", "5", "10", "15", "20"};
+    private final String[] shapesList = new String[]{"Shapes", "circle", "square", "line"};
+
 
     // Declare all the components of the .fxml file you want to control
-    @FXML //  fx:id="canvas"
-    private Canvas canvas; // Value injected by FXMLLoader
+//    @FXML
+//    private Canvas canvas; // Value injected by FXMLLoader
+    private ResizableCanvas canvas;
+
     @FXML
     private AnchorPane canvasHolder;
     @FXML
     private Pane paneCanvas;
 
     // Tools buttons
-//    @FXML
-//    private Button buttonSelect;
-//    @FXML
-//    private Button buttonLineWidth;
     @FXML
     private Button buttonDelete;
     @FXML
@@ -63,54 +62,28 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     @FXML
     private Shape buttonSquare;
 
-    //GraphicContext is used to draw on the canvas
-    /*private GraphicsContext gc;
-
-    // Figure Properties
-    private Color colorStroke;
-    private Color colorFill;
-    private int lineWidth;
-    */
-
     private Paint paint;
     public Attribute attr;
 
-
-    //=============================================
-    private final String[] lineSize = new String[]{"Line size", "1", "5", "10", "15", "20"};
-    private final String[] shapesList = new String[]{"Shapes", "circle", "square", "line"};
-
-
-
     public void initialize(URL location, ResourceBundle resources) {
         // asset the ui elements
-        assert canvas != null : "fx:id=\"canvas\" was not injected: check your FXML file 'main.fxml'.";
+        //assert canvas != null : "fx:id=\"uiComponents\" was not injected: check your FXML file 'main.fxml'.";
         //assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
         assert choiceBox != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
-        paint = new Paint(canvas.getGraphicsContext2D());
+        initResizableCanvas();
 
-        // Add css to the canvas so it looks like a piece of paper
+        // Add css to the uiComponents so it looks like a piece of paper
         styleCanvas();
 
         // Init the default values used for the drawing shapes; t.ex colorStroke
         initDefaultValues();
         // Register the action handlers here
         // ==========================Tools===========================
-//        buttonSelect.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-//
-//        buttonLineWidth.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-
         buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-        // ==========================Shapes===========================
-//        buttonCircle.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-//
-//        buttonSquare.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
-//
-//        buttonLine.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         // ========================Color picker========================
         colorPickerStroke.setOnAction(new EventHandler<ActionEvent>() {
@@ -129,7 +102,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
             }
         });
         // ======================== Canvas =================================
-//        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+//        uiComponents.addEventHandler(MouseEvent.MOUSE_DRAGGED,
 //                new EventHandler<MouseEvent>() {
 //                    @Override
 //                    public void handle(MouseEvent e) {
@@ -168,25 +141,30 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
 
     private void styleCanvas(){
-        Log.i("CANVAS HOLDER X: " + canvasHolder.widthProperty() +  " Y: " + canvasHolder.heightProperty());
-        // Add css to the panel that hold the canvas
+        // Add css to the panel that hold the uiComponents
         canvasHolder.getStyleClass().add("main_panel");
-        // Add css to canvas
-        paneCanvas.setPrefSize(canvasHolder.getWidth(), canvasHolder.getHeight());
+        // Add css to uiComponents
         paneCanvas.getStyleClass().add("canvas");
     }
 
-    // Call every time the user change the properties of the figure
-    private void updateGraphicContext(){
-        // Update Attribute object here!!
-    }
-
     private void initDefaultValues(){
+        paint = new Paint(canvas.getGraphicsContext2D());
         colorPickerFill.setValue(Color.WHITE);
         colorPickerStroke.setValue(Color.BLACK);
         this.attr = new Attribute(30,30,5,
                 colorPickerStroke.getValue(),
                 colorPickerFill.getValue()); // X, Y, lineWidth, colorStroke, colorFill
+    }
+
+    private void initResizableCanvas(){
+        // Bind canvas size to stack pane size.
+        canvas = new ResizableCanvas();
+        canvas.setId("canvas");
+        paneCanvas.getChildren().add(canvas);
+        canvas.widthProperty().bind(
+                paneCanvas.widthProperty());
+        canvas.heightProperty().bind(
+                paneCanvas.heightProperty());
     }
 
     //================================ Actions ================================
@@ -208,12 +186,12 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         switch (evt) {
             case "canvas":
                 Log.i("DRAW ON CANVAS!");
-                double x = event.getX();
-                double y = event.getY();
-                attr.setX(x);
-                attr.setY(y);
+//                double x = event.getX();
+//                double y = event.getY();
+                attr.setX(event.getX());
+                attr.setY(event.getY());
                 paint.draw(attr);
-                Log.i("Canvas X: " + x + " Y: " + y);
+//              Log.i("Canvas X: " + x + " Y: " + y);
                 break;
             case "buttonSelect":
                 Log.i("Button Select Clicked!");
@@ -227,22 +205,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
             case "buttonFill":
                 Log.i("Button FILL Clicked!");
                 break;
-//            case "buttonCircle":
-//                Log.i("DRAW CIRCLE!");
-//                //shape = "circle";
-//                //this.paint.drawCircle(this.attr);
-//                attr.setId("circle");
-//                break;
-//            case "buttonSquare":
-//                Log.i("DRAW SQUARE!");
-//                //this.paint.drawSquare(this.attr);
-//                attr.setId("square");
-//                break;
-//            case "buttonLine":
-//                Log.i("DRAW LINE!");
-//                //this.paint.drawLine(this.attr);
-//                attr.setId("line");
-//                break;
             default:
                 break;
         }

@@ -41,10 +41,6 @@ public class Paint {
         /*TODO:
         *   Make a for loop that look that match actions with
         * */
-//        ShapeType attrShapeType = attr.getType();
-//        for (ShapeType type: ShapeType.values()){
-//
-//        }
         ShapeType shapeType = attr.getType();
         if( shapeType != null){
             switch (shapeType){

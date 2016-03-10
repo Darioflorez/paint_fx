@@ -18,8 +18,7 @@ public class Line extends Shape {
     }
     @Override
     public void draw(GraphicsContext gc) {
-        // need colorFill, lineWith, x1, y1, x2, y2
-        gc.setFill(Color.web(this.attribute.getColorFill()));
+        gc.setStroke(Color.web(this.attribute.getColorStroke()));
         gc.setLineWidth(this.attribute.getLineWidth());
         gc.strokeLine(this.attribute.getX(), this.attribute.getY(), this.x2, this.y2); // (x1, y1, x2, y2)
     }

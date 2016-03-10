@@ -10,6 +10,7 @@ import utilities.Log;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by dario on 2016-03-08.
@@ -18,6 +19,7 @@ public class Paint {
 
     private List<Attribute> list;
     private GraphicsContext gc;
+    private Stack<List<Shape>> stack;
 
     public Paint(GraphicsContext gc){
         this.gc = gc;

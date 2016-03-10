@@ -16,10 +16,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import models.*;
+import interfaces.*;
 import uiComponents.ResizableCanvas;
+import utilities.FileHandler;
 import utilities.Log;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -52,14 +55,10 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private ChoiceBox<Integer> choiceBoxLine;
     @FXML
     private ChoiceBox<ShapeType> choiceBoxShapes;
-
-    // Button Shapes
     @FXML
-    private Shape buttonCircle;
+    private MenuItem buttonSave;
     @FXML
-    private Shape buttonLine;
-    @FXML
-    private Shape buttonSquare;
+    private MenuItem buttonLoad;
 
     private Paint paint;
     public Attribute attr;
@@ -83,6 +82,35 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
+
+
+        // ===================SAVE AND LOAD===========================
+        buttonSave.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Log.i("Button SAVE Clicked!");
+                try{
+                    FileHandler.save(paint.getList());
+                    Log.i("Saving " + paint.getList().size() + "number of objects");
+                }catch(Exception e){
+                    System.err.println(e);
+                }
+            }
+        });
+
+        buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Log.i("Button LOAD Clicked!");
+                try{
+                    List<Attribute> attrs = FileHandler.read();
+                    canvas.cleaCanvas();
+                    paint.loadCanvas(attrs);
+                }catch(Exception e){
+                    System.err.println(e);
+                }
+            }
+        });
 
         // ========================Color picker========================
         colorPickerStroke.setOnAction(new EventHandler<ActionEvent>() {
@@ -165,9 +193,9 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     @Override
     public void handle(MouseEvent event) {
         String evt = "";
-        if(event.getSource() instanceof Shape){
-            evt = ((Shape)event.getSource()).getId();
-            //Log.i( ((Shape)event.getSource()).getType() );
+        if(event.getSource() instanceof MenuItem){
+            evt = ((MenuItem)event.getSource()).getId();
+            Log.i( ((MenuItem)event.getSource()).getId());
         }
         else if(event.getSource() instanceof Control){
             evt = ((Control)event.getSource()).getId();

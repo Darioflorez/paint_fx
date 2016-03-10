@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by johan on 09/03/16.
  */
-public class Attribute implements Serializable {
+public class Attribute implements Serializable, Cloneable {
 
     private double x;
     private double y;
@@ -36,6 +36,15 @@ public class Attribute implements Serializable {
         this.colorStroke = colorStroke;
         this.fill = false;
         this.type = null;
+    }
+
+    public Attribute clone() {
+        try {
+            return (Attribute) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
     }
 
     public double getX() {

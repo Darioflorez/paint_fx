@@ -1,7 +1,7 @@
 /deploy/
 
 /target/
-
+paint_fx.data
 .idea/workspace.xml
 .idea/vcs.xml
 .idea/uiDesigner.xml

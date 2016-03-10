@@ -27,6 +27,14 @@ public class ResizableCanvas extends Canvas {
 //        gc.strokeLine(0, height, width, 0);
     }
 
+    public void cleaCanvas(){
+        double width = getWidth();
+        double height = getHeight();
+
+        GraphicsContext gc = getGraphicsContext2D();
+        gc.clearRect(0, 0, width, height);
+    }
+
     @Override
     public boolean isResizable() {
         return true;

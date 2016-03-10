@@ -1,6 +1,7 @@
 package models;
 
 
+import enums.ShapeType;
 import javafx.scene.paint.Color;
 
 /**
@@ -14,7 +15,7 @@ public class Attribute {
     private boolean fill;
     private Color colorStroke;
     private Color colorFill;
-    private String id;
+    private ShapeType type;
 
     public Attribute(double x, double Y, int lineWidth, Color colorStroke, Color colorFill){
         this.x = x;
@@ -23,7 +24,7 @@ public class Attribute {
         this.lineWidth = lineWidth;
         this.colorStroke = colorStroke;
         this.colorFill = colorFill;
-        this.id = "";
+        this.type = null;
     }
 
     public Attribute(double x, double y, int lineWidth, Color colorStroke) {
@@ -32,7 +33,7 @@ public class Attribute {
         this.lineWidth = lineWidth;
         this.colorStroke = colorStroke;
         this.fill = false;
-        this.id = "";
+        this.type = null;
     }
 
     public double getX() {
@@ -83,11 +84,11 @@ public class Attribute {
         this.colorFill = colorFill;
     }
 
-    public String getId() {
-        return id;
+    public ShapeType getType() {
+        return type;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setType(ShapeType type) {
+        this.type = type;
     }
 }

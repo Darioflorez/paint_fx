@@ -60,7 +60,7 @@
                                     <Insets right="20.0" top="20.0" />
                                  </HBox.margin>
                               </Button>
-                              <ChoiceBox fx:id="choiceBox">
+                              <ChoiceBox fx:id="choiceBoxLine">
                                  <HBox.margin>
                                     <Insets right="20.0" top="20.0" />
                                  </HBox.margin>
@@ -131,7 +131,7 @@
          <children>
             <Pane fx:id="paneCanvas" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
               <!-- <children>
-                  <Canvas fx:id="canvas" height="393.0" width="661.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Canvas fx:type="canvas" height="393.0" width="661.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <rotationAxis>
                         <Point3D />
                      </rotationAxis></Canvas>

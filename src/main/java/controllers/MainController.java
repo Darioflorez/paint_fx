@@ -1,5 +1,6 @@
 package controllers;
 
+import enums.ShapeType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,8 +27,7 @@ import java.util.ResourceBundle;
  */
 public class MainController implements Initializable, EventHandler<MouseEvent>{
 
-    private final String[] lineSize = new String[]{"Line size", "1", "5", "10", "15", "20"};
-    private final String[] shapesList = new String[]{"Shapes", "circle", "square", "line"};
+    private final Integer[] lineSize = new Integer[]{1,5,10,15,20};
 
 
     // Declare all the components of the .fxml file you want to control
@@ -50,9 +50,9 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     @FXML
     private ColorPicker colorPickerFill;
     @FXML
-    private ChoiceBox choiceBox;
+    private ChoiceBox<Integer> choiceBoxLine;
     @FXML
-    private ChoiceBox choiceBoxShapes;
+    private ChoiceBox<ShapeType> choiceBoxShapes;
 
     // Button Shapes
     @FXML
@@ -70,7 +70,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         //assert canvas != null : "fx:id=\"uiComponents\" was not injected: check your FXML file 'main.fxml'.";
         //assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
         assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
-        assert choiceBox != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
+        assert choiceBoxLine != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
         initResizableCanvas();
 
@@ -90,7 +90,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
             @Override
             public void handle(ActionEvent event) {
                 attr.setColorStroke(colorPickerStroke.getValue());
-                Log.i("Color Stroke: " + attr.getColorStroke());
+                Log.i("Color Stroke: " + attr.getColorStroke().toString());
             }
         });
 
@@ -111,26 +111,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 //                });
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
-        // ======================== ChoiceBox =============================
-        choiceBox.setItems(FXCollections.observableArrayList(lineSize));
-        choiceBox.setValue(lineSize[0]);
-        choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Log.i(lineSize[newValue.intValue()]);
-                attr.setLineWidth(Integer.parseInt(lineSize[newValue.intValue()]));
-            }
-        });
-
-        choiceBoxShapes.setItems(FXCollections.observableArrayList(shapesList));
-        choiceBoxShapes.setValue(shapesList[0]);
-        choiceBoxShapes.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                Log.i(shapesList[newValue.intValue()]);
-                attr.setId(shapesList[newValue.intValue()]);
-            }
-        });
 
         // ======================= Update new buttons ======================
 //        Button button = new Button();
@@ -148,12 +128,33 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     }
 
     private void initDefaultValues(){
+        initChoiceBox();
+
         paint = new Paint(canvas.getGraphicsContext2D());
         colorPickerFill.setValue(Color.WHITE);
         colorPickerStroke.setValue(Color.BLACK);
         this.attr = new Attribute(30,30,5,
                 colorPickerStroke.getValue(),
                 colorPickerFill.getValue()); // X, Y, lineWidth, colorStroke, colorFill
+    }
+
+    private void initChoiceBox(){
+        // ========================ChoiceBox Adapters======================
+
+        // ======================== ChoiceBox =============================
+        choiceBoxLine.setItems(FXCollections.observableArrayList(lineSize));
+        //choiceBoxLine.setValue(lineSize[0]);
+        choiceBoxLine.valueProperty().addListener((observable, oldValue, newValue) -> {
+            Log.i("LINE WIDTH: " + newValue);
+            attr.setLineWidth(newValue);
+        });
+
+        choiceBoxShapes.setItems(FXCollections.observableArrayList(ShapeType.values()));
+        //choiceBoxShapes.setValue();
+        choiceBoxShapes.valueProperty().addListener((observable, oldValue, newValue) -> {
+            Log.i("SHAPE SELECTED: " + newValue.toString());
+            attr.setType(newValue);
+        });
     }
 
     private void initResizableCanvas(){
@@ -173,15 +174,15 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         String evt = "";
         if(event.getSource() instanceof Shape){
             evt = ((Shape)event.getSource()).getId();
-            //Log.i( ((Shape)event.getSource()).getId() );
+            //Log.i( ((Shape)event.getSource()).getType() );
         }
         else if(event.getSource() instanceof Control){
             evt = ((Control)event.getSource()).getId();
-            //Log.i( ((Control)event.getSource()).getId() );
+            //Log.i( ((Control)event.getSource()).getType() );
         }
         else if (event.getSource() instanceof Canvas){
             evt = ((Canvas)event.getSource()).getId();
-            //Log.i(((Canvas)event.getSource()).getId());
+            //Log.i(((Canvas)event.getSource()).getType());
         }
         switch (evt) {
             case "canvas":

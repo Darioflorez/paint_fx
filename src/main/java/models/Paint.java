@@ -1,5 +1,6 @@
 package models;
 
+import enums.ShapeType;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -23,17 +24,21 @@ public class Paint {
         /*TODO:
         *   Make a for loop that look that match actions with
         * */
-        switch (attr.getId()){
-            case "circle":
+//        ShapeType attrShapeType = attr.getType();
+//        for (ShapeType type: ShapeType.values()){
+//
+//        }
+        switch (attr.getType()){
+            case CIRCLE:
                 //Log.i("CIRCLE: " + " STROKE: "+ attr.getColorStroke() + " FILL: "+ attr.getColorFill());
                 Circonference circle = new Circonference(attr);
                 circle.draw(this.gc);
                 break;
-            case "square":
+            case SQUARE:
                 Square sqr = new Square(attr);
                 sqr.draw(this.gc);
                 break;
-            case "line":
+            case LINE:
                 Line line = new Line(attr);
                 line.draw(this.gc);
                 break;

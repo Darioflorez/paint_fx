@@ -4,20 +4,22 @@ package models;
 import enums.ShapeType;
 import javafx.scene.paint.Color;
 
+import java.io.Serializable;
+
 /**
  * Created by johan on 09/03/16.
  */
-public class Attribute {
+public class Attribute implements Serializable {
 
     private double x;
     private double y;
     private int lineWidth;
     private boolean fill;
-    private Color colorStroke;
-    private Color colorFill;
+    private String colorStroke;
+    private String colorFill;
     private ShapeType type;
 
-    public Attribute(double x, double Y, int lineWidth, Color colorStroke, Color colorFill){
+    public Attribute(double x, double Y, int lineWidth, String colorStroke, String colorFill){
         this.x = x;
         this.y = Y;
         this.fill = true;
@@ -27,7 +29,7 @@ public class Attribute {
         this.type = null;
     }
 
-    public Attribute(double x, double y, int lineWidth, Color colorStroke) {
+    public Attribute(double x, double y, int lineWidth, String colorStroke) {
         this.x = x;
         this.y = y;
         this.lineWidth = lineWidth;
@@ -68,19 +70,19 @@ public class Attribute {
         this.fill = fill;
     }
 
-    public Color getColorStroke() {
+    public String getColorStroke() {
         return colorStroke;
     }
 
-    public void setColorStroke(Color colorStroke) {
+    public void setColorStroke(String colorStroke) {
         this.colorStroke = colorStroke;
     }
 
-    public Color getColorFill() {
+    public String getColorFill() {
         return colorFill;
     }
 
-    public void setColorFill(Color colorFill) {
+    public void setColorFill(String colorFill) {
         this.colorFill = colorFill;
     }
 

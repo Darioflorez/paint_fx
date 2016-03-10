@@ -1,11 +1,13 @@
 package models;
 
+import interfaces.Shape;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  * Created by johan on 09/03/16.
  */
-public class Line extends Shape{
+public class Line extends Shape {
 
     double x2, y2;
 
@@ -16,7 +18,7 @@ public class Line extends Shape{
     }
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(this.attribute.getColorFill());
+        gc.setFill(Color.web(this.attribute.getColorFill()));
         gc.setLineWidth(this.attribute.getLineWidth());
         gc.strokeLine(this.attribute.getX(), this.attribute.getY(), this.x2, this.y2); // (x1, y1, x2, y2)
     }

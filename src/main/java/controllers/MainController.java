@@ -88,7 +88,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         colorPickerStroke.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                attr.setColorStroke(colorPickerStroke.getValue());
+                attr.setColorStroke(colorPickerStroke.getValue().toString());
                 Log.i("Color Stroke: " + attr.getColorStroke().toString());
             }
         });
@@ -96,7 +96,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         colorPickerFill.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                attr.setColorFill(colorPickerFill.getValue());
+                attr.setColorFill(colorPickerFill.getValue().toString());
                 Log.i("Color Fill: " + attr.getColorFill());
             }
         });
@@ -126,8 +126,8 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
         colorPickerStroke.setValue(Color.BLACK);
 
         this.attr = new Attribute(30,30,lineSize[1],
-                colorPickerStroke.getValue(),
-                colorPickerFill.getValue()); // X, Y, lineWidth, colorStroke, colorFill
+                colorPickerStroke.getValue().toString(),
+                colorPickerFill.getValue().toString()); // X, Y, lineWidth, colorStroke, colorFill
 
         initChoiceBox();
         choiceBoxLine.setValue(lineSize[1]);

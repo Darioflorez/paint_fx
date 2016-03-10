@@ -1,12 +1,13 @@
 package models;
 
+import interfaces.Shape;
 import javafx.scene.canvas.GraphicsContext;
-import utilities.Log;
+import javafx.scene.paint.Color;
 
 /**
  * Created by johan on 09/03/16.
  */
-public class Circonference extends Shape{
+public class Circonference extends Shape {
 
     public int width, height;
 
@@ -20,11 +21,11 @@ public class Circonference extends Shape{
 
         // Draw the edges of a line
         gc.setLineWidth(attribute.getLineWidth());
-        gc.setStroke(attribute.getColorStroke());
+        gc.setStroke(Color.web(attribute.getColorStroke()));
         gc.strokeOval(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
 
         // Draw a fill circle
-        gc.setFill(this.attribute.getColorFill());
+        gc.setFill(Color.web(this.attribute.getColorFill()));
         gc.fillOval(this.attribute.getX(), this.attribute.getY(), this.width, this.height);
     }
 }

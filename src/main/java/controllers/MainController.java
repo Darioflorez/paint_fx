@@ -1,8 +1,7 @@
 package controllers;
 
+import command.*;
 import enums.ShapeType;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,15 +15,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
 import models.*;
-import interfaces.*;
 import models.Paint;
 import uiComponents.ResizableCanvas;
 import utilities.FileHandler;
 import utilities.Log;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,9 +33,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private final Integer[] lineSize = new Integer[]{1,5,10,15,20};
 
     // Declare all the components of the .fxml file you want to control
-//    @FXML
-//    private Canvas canvas; // Value injected by FXMLLoader
-    private ResizableCanvas canvas;
+    private ResizableCanvas canvas; // Value injected by FXMLLoader
 
     @FXML
     private AnchorPane canvasHolder;
@@ -74,11 +68,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     public Attribute attr;
 
     public void initialize(URL location, ResourceBundle resources) {
-        // asset the ui elements
-        //assert canvas != null : "fx:id=\"uiComponents\" was not injected: check your FXML file 'main.fxml'.";
-        //assert buttonSelect != null : "fx:id=\"buttonSelect\" was not injected: check your FXML file 'main.fxml'.";
-        assert canvasHolder != null : "fx:id=\"canvasHolder\" was not injected: check your FXML file 'main.fxml'.";
-        assert choiceBoxLine != null : "fx:id=\"choiceBox\" was not injected: check your FXML file 'main.fxml'.";
         // initialize your logic here: all @FXML variables will have been injected
         initResizableCanvas();
 
@@ -87,39 +76,40 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
         // Init the default values used for the drawing shapes; t.ex colorStroke
         initDefaultValues();
+
         // Register the action handlers here
         // ==========================Tools===========================
         buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
         buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
-
-        // ===================SAVE AND LOAD===========================
-        buttonSave.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Log.i("Button SAVE Clicked!");
-                try{
-                    FileHandler.save(paint.getList());
-                    Log.i("Saving " + paint.getList().size() + "number of objects");
-                }catch(Exception e){
-                    System.err.println(e);
-                }
-            }
+        // ===================UNDO AND REDO===========================
+        buttonUndo.setOnAction(event -> {
+            Log.i("UNDO COMMAND!");
+            Undo undo = new Undo(paint);
+            CommitButton commit = new CommitButton(undo);
+            commit.press();
         });
 
-        buttonLoad.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Log.i("Button LOAD Clicked!");
-                try{
-                    List<Attribute> attrs = FileHandler.read();
-                    canvas.cleaCanvas();
-                    paint.loadCanvas(attrs);
-                }catch(Exception e){
-                    System.err.println(e);
-                }
-            }
+        buttonRedo.setOnAction(event -> {
+            Log.i("REDO COMMAND!");
+            Redo redo = new Redo(paint);
+            CommitButton commit = new CommitButton(redo);
+            commit.press();
+        });
+
+        // ===================SAVE AND LOAD===========================
+        buttonSave.setOnAction(event -> {
+            Log.i("Button SAVE Clicked!");
+            Save save = new Save(paint);
+            CommitButton commit = new CommitButton(save);
+            commit.press();
+        });
+        buttonLoad.setOnAction(event -> {
+            Log.i("Button LOAD Clicked!");
+            LoadCanvas loadCanvas = new LoadCanvas(paint);
+            CommitButton commit = new CommitButton(loadCanvas);
+            commit.press();
         });
 
         // ========================Color picker========================
@@ -159,7 +149,7 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     }
 
     private void initDefaultValues(){
-        paint = new Paint(canvas.getGraphicsContext2D());
+        paint = new Paint(canvas);
         colorPickerFill.setValue(Color.WHITE);
         colorPickerStroke.setValue(Color.BLACK);
 
@@ -174,14 +164,12 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     // ======================== ChoiceBox =============================
     private void initChoiceBox(){
         choiceBoxLine.setItems(FXCollections.observableArrayList(lineSize));
-        //choiceBoxLine.setValue(lineSize[0]);
         choiceBoxLine.valueProperty().addListener((observable, oldValue, newValue) -> {
             Log.i("LINE WIDTH: " + newValue);
             attr.setLineWidth(newValue);
         });
 
         choiceBoxShapes.setItems(FXCollections.observableArrayList(ShapeType.values()));
-        //choiceBoxShapes.setValue();
         choiceBoxShapes.valueProperty().addListener((observable, oldValue, newValue) -> {
             Log.i("SHAPE SELECTED: " + newValue.toString());
             attr.setType(newValue);

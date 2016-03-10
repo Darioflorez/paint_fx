@@ -1,7 +1,11 @@
 package command;
 
-import interfaces.Shape;
+import models.Attribute;
+import models.Paint;
+import utilities.Log;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -10,15 +14,15 @@ import java.util.Stack;
  */
 public class Undo implements Command {
 
-    private Stack<List<Shape>> stack;
+    private Paint paint;
 
-    public Undo(Stack<List<Shape>> stack){
-        this.stack = stack;
+    public Undo(Paint paint){
+        this.paint = paint;
     }
 
     @Override
     public void execute() {
-        stack.pop();
+        paint.undo();
     }
 
 }

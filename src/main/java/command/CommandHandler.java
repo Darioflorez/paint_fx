@@ -1,17 +1,15 @@
 package command;
 
+import models.Attribute;
+
 /**
  * Created by dario on 2016-03-10.
  */
-public class CommandHandler {
+public interface CommandHandler {
 
-    private Command command;
-
-    public void undo(){
-        
-    }
-
-    public void redo(){
-
-    }
+    public void undo();
+    public void redo();
+    public void save();
+    public void loadCanvas();
+    public void draw(Attribute attr);
 }

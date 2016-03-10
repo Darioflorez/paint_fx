@@ -29,7 +29,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 
     private final Integer[] lineSize = new Integer[]{1,5,10,15,20};
 
-
     // Declare all the components of the .fxml file you want to control
 //    @FXML
 //    private Canvas canvas; // Value injected by FXMLLoader
@@ -111,12 +110,6 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
 //                });
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, this);
 
-
-        // ======================= Update new buttons ======================
-//        Button button = new Button();
-//        button.setText("Polygon");
-
-
     }
 
 
@@ -128,20 +121,20 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     }
 
     private void initDefaultValues(){
-        initChoiceBox();
-
         paint = new Paint(canvas.getGraphicsContext2D());
         colorPickerFill.setValue(Color.WHITE);
         colorPickerStroke.setValue(Color.BLACK);
-        this.attr = new Attribute(30,30,5,
+
+        this.attr = new Attribute(30,30,lineSize[1],
                 colorPickerStroke.getValue(),
                 colorPickerFill.getValue()); // X, Y, lineWidth, colorStroke, colorFill
+
+        initChoiceBox();
+        choiceBoxLine.setValue(lineSize[1]);
     }
 
+    // ======================== ChoiceBox =============================
     private void initChoiceBox(){
-        // ========================ChoiceBox Adapters======================
-
-        // ======================== ChoiceBox =============================
         choiceBoxLine.setItems(FXCollections.observableArrayList(lineSize));
         //choiceBoxLine.setValue(lineSize[0]);
         choiceBoxLine.valueProperty().addListener((observable, oldValue, newValue) -> {

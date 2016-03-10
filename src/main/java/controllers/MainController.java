@@ -10,6 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -17,10 +19,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import models.*;
 import interfaces.*;
+import models.Paint;
 import uiComponents.ResizableCanvas;
 import utilities.FileHandler;
 import utilities.Log;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -59,6 +63,12 @@ public class MainController implements Initializable, EventHandler<MouseEvent>{
     private MenuItem buttonSave;
     @FXML
     private MenuItem buttonLoad;
+
+    // State buttons
+    @FXML
+    private Button buttonUndo;
+    @FXML
+    private Button buttonRedo;
 
     private Paint paint;
     public Attribute attr;

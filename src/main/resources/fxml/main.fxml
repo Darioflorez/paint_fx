@@ -129,6 +129,28 @@
                         <Label text="Colors" BorderPane.alignment="CENTER" />
                      </bottom>
                   </BorderPane>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button fx:id="buttonUndo" mnemonicParsing="false" text="Undo">
+                                 <HBox.margin>
+                                    <Insets left="10.0" right="10.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="buttonRedo" mnemonicParsing="false" text="Redo">
+                                 <HBox.margin>
+                                    <Insets right="10.0" top="20.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </center>
+                     <bottom>
+                        <Label text="State" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
 
                 </children>
             </HBox>

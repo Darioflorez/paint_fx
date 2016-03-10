@@ -4,11 +4,8 @@ import enums.ShapeType;
 import interfaces.Shape;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import uiComponents.ResizableCanvas;
-import utilities.Log;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -17,26 +14,13 @@ import java.util.Stack;
  */
 public class Paint {
 
-    private List<Attribute> list;
+    private List<Shape> list;
     private GraphicsContext gc;
     private Stack<List<Shape>> stack;
 
     public Paint(GraphicsContext gc){
         this.gc = gc;
         this.list = new ArrayList<>();
-    }
-
-    public List<Attribute> getList(){
-        return this.list;
-    }
-
-    public void loadCanvas(List<Attribute> shapes){
-        Log.i("---> " + shapes.size());
-        for(Attribute atr: shapes){
-            Log.i("X: " + atr.getX());
-            Log.i("Y: " + atr.getY());
-            draw(atr);
-        }
     }
 
     public void draw(Attribute attr){
@@ -54,17 +38,20 @@ public class Paint {
                     //Log.i("CIRCLE: " + " STROKE: "+ attr.getColorStroke() + " FILL: "+ attr.getColorFill());
                     Circonference circle = new Circonference(attr);
                     circle.draw(this.gc);
-                    list.add(circle.attribute.clone());
+                    list.add(circle);
+                    stack.add(list);
                     break;
                 case SQUARE:
                     Square sqr = new Square(attr);
                     sqr.draw(this.gc);
-                    list.add(sqr.attribute.clone());
+                    list.add(sqr);
+                    stack.add(list);
                     break;
                 case LINE:
                     Line line = new Line(attr);
                     line.draw(this.gc);
-                    list.add(line.attribute.clone());
+                    list.add(line);
+                    stack.add(list);
                     break;
                 default:
                     break;

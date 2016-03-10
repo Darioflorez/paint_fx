@@ -6,6 +6,8 @@ Användaren ska kunna rita olika typer av objekt:
 * ~~linjer~~
 * ~~Ovaler~~
 * ~~Flerhörningar~~
+* ~~Spara och ladda från fil~~
+
 Genom att välja typ från en meny eller knappsats.
 
 Användaren ska kunna välja ett objekt för att:

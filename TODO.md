@@ -28,8 +28,8 @@ från programmering mot implementationer) m.fl. principer.
 
 Applikationen vara skriven med fokus på att göra det lätt att i efterhand utveckla programmet;
 De ska vara relativt enkelt att lägga till nya 
-* vyer med altenentiva presentationer av modellen
-* ritbara typer
+* ~~vyer med altenentiva presentationer av modellen~~
+* ~~ritbara typer~~
 
 Designmönster att använda:
 * ~~Model-View-Controller (separata paket för de olika delarna)~~

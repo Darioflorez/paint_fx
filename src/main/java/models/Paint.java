@@ -38,16 +38,6 @@ public class Paint implements CommandHandler{
         return new ArrayList<>(this.currentList);
     }
 
-    public void loadCanvas(List<Attribute> shapes){
-        Log.i("---> " + shapes.size());
-        this.currentList = new ArrayList<>();
-        for(Attribute atr: shapes){
-            Log.i("X: " + atr.getX());
-            Log.i("Y: " + atr.getY());
-            draw(atr);
-        }
-    }
-
     public Shape drawOnCanvas(Attribute attr){
         if(attr.getType() == null){
             return null;
@@ -64,7 +54,7 @@ public class Paint implements CommandHandler{
         }
         Shape shape = drawOnCanvas(attr);
         currentList.add(shape.attribute.clone());
-        stack.add(new ArrayList<>(currentList));
+        stack.add(getCurrentList());
         Log.i("DRAW STACK SIZE: " + stack.size());
     }
 
@@ -98,8 +88,7 @@ public class Paint implements CommandHandler{
                 Shape shape = drawOnCanvas(attr);
                 this.currentList.add(shape.attribute.clone());
             }
-            stack.add(new ArrayList<>(this.currentList));
-
+            stack.add(getCurrentList());
         } else {
             Log.i("STACK REDO EMPTY!");
         }
@@ -119,11 +108,11 @@ public class Paint implements CommandHandler{
     @Override
     public void loadCanvas(){
         try{
-            List<Attribute> savedState = FileHandler.read();
-            canvas.cleaCanvas();
             this.currentList = new ArrayList<>();
             this.stack = new Stack<>();
             this.stackRedo = new Stack<>();
+            List<Attribute> savedState = FileHandler.read();
+            canvas.cleaCanvas();
             for(Attribute attr: savedState){
                 Shape shape = drawOnCanvas(attr);
                 this.currentList.add(shape.attribute.clone());

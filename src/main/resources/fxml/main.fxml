@@ -130,9 +130,9 @@
                      </bottom>
                   </BorderPane>
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                  <BorderPane>
                      <center>
-                        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <HBox BorderPane.alignment="CENTER">
                            <children>
                               <Button fx:id="buttonUndo" mnemonicParsing="false" text="Undo">
                                  <HBox.margin>

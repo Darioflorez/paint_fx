@@ -3,11 +3,8 @@ package controllers;
 import command.*;
 import enums.ShapeType;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
@@ -15,14 +12,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import main.Main;
 import models.*;
 import models.Paint;
 import uiComponents.ResizableCanvas;
-import utilities.FileHandler;
 import utilities.Log;
+import utilities.Themes;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -53,10 +50,18 @@ public class MainController implements Initializable {
     private ChoiceBox<Integer> choiceBoxLine;
     @FXML
     private ChoiceBox<ShapeType> choiceBoxShapes;
+
+    // Menu items
     @FXML
     private MenuItem buttonSave;
     @FXML
     private MenuItem buttonLoad;
+    @FXML
+    private MenuItem themeLight;
+    @FXML
+    private MenuItem themeBlack;
+    @FXML
+    private MenuItem themePink;
 
     // State buttons
     @FXML
@@ -66,6 +71,9 @@ public class MainController implements Initializable {
 
     private Paint paint;
     public Attribute attr;
+
+    public boolean fill;
+    public boolean delete;
 
     public void initialize(URL location, ResourceBundle resources) {
         // initialize your logic here: all @FXML variables will have been injected
@@ -96,6 +104,8 @@ public class MainController implements Initializable {
         canvasHolder.getStyleClass().add("main_panel");
         // Add css to uiComponents
         paneCanvas.getStyleClass().add("canvas");
+
+        //Main.main(new String [1]);
     }
 
     private void initDefaultValues(){
@@ -110,12 +120,26 @@ public class MainController implements Initializable {
         choiceBoxLine.setItems(FXCollections.observableArrayList(lineSize));
         choiceBoxShapes.setItems(FXCollections.observableArrayList(ShapeType.values()));
         choiceBoxLine.setValue(lineSize[1]);
+
+        this.fill =false;
+        this.delete =false;
     }
 
     //================================ Actions ================================
     private void initHandlers(){
 
         // Register the action handlers here
+        // ===================UNDO AND REDO===========================
+        themeLight.setOnAction(event -> {
+            Main.main(new String[] {Themes.THEME_LIGHT});
+        });
+        themeBlack.setOnAction(event -> {
+            Main.main(new String[] {Themes.THEME_BLACK});
+        });
+        themePink.setOnAction(event -> {
+            Main.main(new String[] {Themes.THEME_PINK});
+        });
+
         // ===================UNDO AND REDO===========================
         buttonUndo.setOnAction(event -> {
             Log.i("UNDO COMMAND!");
@@ -153,11 +177,14 @@ public class MainController implements Initializable {
 
         // ==========================Tools===========================
         buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            Log.i("Button DELETE Clicked!");
+            toogleFill();
+            Log.i("Button FILL Clicked: " + fill);
         });
 
         buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            Log.i("Button DELETE Clicked!");
+            toogleDelete();
+            fill = false;
+            Log.i("Button Delete Clicked: " + delete);
         });
 
         // ======================== ChoiceBox =============================
@@ -170,17 +197,30 @@ public class MainController implements Initializable {
         //choiceBoxShapes.setItems(FXCollections.observableArrayList(ShapeType.values()));
         choiceBoxShapes.valueProperty().addListener((observable, oldValue, newValue) -> {
             Log.i("SHAPE SELECTED: " + newValue.toString());
+            fill = false;
             attr.setType(newValue);
         });
 
         // ======================== Canvas =================================
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            Log.i("DRAW ON CANVAS!");
 //                double x = event.getX();
 //                double y = event.getY();
-            attr.setX(event.getX());
-            attr.setY(event.getY());
-            paint.draw(attr);
+            if(delete){
+                Log.i("DELETE SHAPE!");
+                paint.delete(event.getX(), event.getY());
+                delete = false;
+            }
+            else if(fill){
+                Log.i("FILL SHAPE!");
+                paint.fill(event.getX(), event.getY(),
+                        attr.getColorFill(), attr.getLineWidth());
+            }
+            else{
+                Log.i("DRAW ON CANVAS!");
+                attr.setX(event.getX());
+                attr.setY(event.getY());
+                paint.draw(attr);
+            }
         });
 //        uiComponents.addEventHandler(MouseEvent.MOUSE_DRAGGED,
 //                new EventHandler<MouseEvent>() {
@@ -189,5 +229,22 @@ public class MainController implements Initializable {
 //                        gc.strokeRect(e.getX() - 2, e.getY() - 2, 5, 5);
 //                    }
 //                });
+    }
+
+    private void toogleFill(){
+        if(fill){
+            fill = false;
+        }
+        else {
+            fill = true;
+        }
+    }
+    private void toogleDelete(){
+        if(delete){
+            delete = false;
+        }
+        else {
+            delete = true;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package models;
 
 import command.CommandHandler;
+import enums.ShapeType;
 import factory.ShapeFactory;
 import interfaces.Shape;
 import javafx.scene.canvas.GraphicsContext;
@@ -38,13 +39,12 @@ public class Paint implements CommandHandler{
         return new ArrayList<>(this.currentList);
     }
 
-    public Shape drawOnCanvas(Attribute attr){
+    public void drawOnCanvas(Attribute attr){
         if(attr.getType() == null){
-            return null;
+            return;
         }
         Shape shape = ShapeFactory.getShape(attr);
         shape.draw(gc);
-        return shape;
     }
 
     @Override
@@ -52,43 +52,37 @@ public class Paint implements CommandHandler{
         if(attr.getType() == null){
             return;
         }
-        Shape shape = drawOnCanvas(attr);
-        currentList.add(shape.attribute.clone());
-        stack.add(getCurrentList());
-        Log.i("DRAW STACK SIZE: " + stack.size());
+        currentList.add(attr.clone());
+        updateCanvas(getCurrentList());
+        submitToStack(getCurrentList());
+        stackRedo = new Stack<>();
     }
 
     @Override
     public void undo(){
         if(stack.size() > 1){
-            canvas.cleaCanvas();
-            stackRedo.add(new ArrayList<>(stack.pop()));
-            List<Attribute> oldState = stack.peek();
-            this.currentList = new ArrayList<>();
-            for(Attribute attr: oldState){
-                Shape shape = drawOnCanvas(attr);
-                this.currentList.add(shape.attribute.clone());
-            }
+            submitToRedoStack(new ArrayList<>(stack.pop()));
+            List<Attribute> oldState = new ArrayList<>(stack.peek());
+            updateCanvas(oldState);
+            updateCurrentList(oldState);
         } else if (stack.size() == 1) {
-            canvas.cleaCanvas();
-            stackRedo.add(new ArrayList<>(stack.pop()));
+            submitToRedoStack(new ArrayList<>(stack.pop()));
+            updateCanvas(new ArrayList<>());
+            updateCurrentList(new ArrayList<>());
         } else {
+            // The stack is empty. There is nothing to paint
             Log.i("STACK IS EMPTY!");
         }
+
     }
 
     @Override
     public void redo() {
-        Log.i("STACK REDO SIZE: " + stackRedo.size());
         if(stackRedo.size() > 0){
-            canvas.cleaCanvas();
             List<Attribute> oldState = new ArrayList<>(stackRedo.pop());
-            this.currentList = new ArrayList<>();
-            for(Attribute attr: oldState){
-                Shape shape = drawOnCanvas(attr);
-                this.currentList.add(shape.attribute.clone());
-            }
-            stack.add(getCurrentList());
+            updateCanvas(oldState);
+            updateCurrentList(oldState);
+            submitToStack(oldState);
         } else {
             Log.i("STACK REDO EMPTY!");
         }
@@ -108,19 +102,76 @@ public class Paint implements CommandHandler{
     @Override
     public void loadCanvas(){
         try{
-            this.currentList = new ArrayList<>();
             this.stack = new Stack<>();
             this.stackRedo = new Stack<>();
-            List<Attribute> savedState = FileHandler.read();
-            canvas.cleaCanvas();
-            for(Attribute attr: savedState){
-                Shape shape = drawOnCanvas(attr);
-                this.currentList.add(shape.attribute.clone());
-            }
-            this.stack.add(getCurrentList());
+            this.currentList = FileHandler.read();
+            updateCanvas(getCurrentList());
+            submitToStack(getCurrentList());
         }catch(Exception e){
             System.err.println(e);
         }
+    }
+
+    public void fill(double x, double y, String color, int lineSize){
+        Attribute attr;
+        for (int i = 0; i< this.currentList.size(); i++){
+            attr = this.currentList.get(i).clone();
+            if (x >= attr.getX() && x <= attr.getX() + 80) {
+                if (y < attr.getY() + 80 && y > attr.getY()) {
+                    if(attr.getType() == ShapeType.LINE){
+                        attr.setColorStroke(color);
+                        attr.setLineWidth(lineSize);
+                    } else {
+                        attr.setColorFill(color);
+                        attr.setLineWidth(lineSize);
+                    }
+                    this.currentList.set(i,attr);
+                    updateCanvas(getCurrentList());
+                    submitToStack(getCurrentList());
+                    stackRedo = new Stack<>();
+                    break;
+                }
+            }
+        }
+    }
+
+    public void delete(double x, double y){
+        Attribute attr;
+        for (int i = 0; i< this.currentList.size(); i++){
+            attr = this.currentList.get(i).clone();
+            if (x >= attr.getX() && x <= attr.getX() + 80) {
+                if (y < attr.getY() + 80 && y > attr.getY()) {
+                    this.currentList.remove(i);
+                    updateCanvas(getCurrentList());
+                    submitToStack(getCurrentList());
+                    stackRedo = new Stack<>();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void updateCanvas(List<Attribute> shapeList){
+        canvas.cleaCanvas();
+        for(Attribute attr: shapeList){
+            drawOnCanvas(attr);
+        }
+    }
+
+    private void updateCurrentList(List<Attribute> list){
+        this.currentList = list;
+    }
+
+    private void submitToStack(List<Attribute> list){
+        this.stack.add(list);
+        Log.i("STACK SIZE: " + stack.size());
+        Log.i("STACK REDO SIZE: " + stackRedo.size());
+    }
+
+    private void submitToRedoStack(List<Attribute> list){
+        stackRedo.add(list);
+        Log.i("STACK SIZE: " + stack.size());
+        Log.i("STACK REDO SIZE: " + stackRedo.size());
     }
 
 

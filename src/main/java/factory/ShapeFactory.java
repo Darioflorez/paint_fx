@@ -2,10 +2,7 @@ package factory;
 
 import enums.ShapeType;
 import interfaces.Shape;
-import models.Attribute;
-import models.Circonference;
-import models.Line;
-import models.Square;
+import models.*;
 
 /**
  * Created by dario on 2016-03-10.
@@ -26,6 +23,9 @@ public class ShapeFactory {
                     break;
                 case LINE:
                     shape = new Line(attr);
+                    break;
+                case TRIANGLE:
+                    shape = new Polygon(attr);
                     break;
                 default:
                     break;

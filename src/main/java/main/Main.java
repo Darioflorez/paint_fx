@@ -7,16 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import utilities.Log;
+import utilities.Themes;
 
 import java.net.URI;
 import java.net.URL;
 
 public class Main extends Application {
 
-    private static final String THEME_BLACK = "/css/styles_black.css";
-    private static final String THEME_LIGHT = "/css/styles_light.css";
-    private static final String THEME_BLUE = "/css/styles_blue.css";
-    Button button;
+    public static String THEME = "";
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -26,7 +24,7 @@ public class Main extends Application {
         Log.i(resource.toString());
         Parent root = FXMLLoader.load(resource);
         // add styles to main.fxml
-        root.getStylesheets().add(THEME_BLUE);
+        root.getStylesheets().add(THEME);
 
         // create a window
         Scene scene = new Scene(root, 800, 500);
@@ -35,6 +33,11 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        THEME = Themes.THEME_LIGHT;
+        if(args.length > 0){
+            Log.i("ARGS: " + args[0]);
+            THEME = args[0];
+        }
         launch(args);
     }
 }

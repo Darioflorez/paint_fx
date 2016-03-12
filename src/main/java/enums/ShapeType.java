@@ -6,5 +6,6 @@ package enums;
 public enum ShapeType {
     CIRCLE,
     SQUARE,
-    LINE
+    LINE,
+    TRIANGLE
 }

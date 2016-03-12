@@ -22,9 +22,11 @@
                         <MenuItem fx:id="buttonLoad" mnemonicParsing="false" text="Load" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu mnemonicParsing="false" text="Theme">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                    <MenuItem fx:id="themeLight" mnemonicParsing="false" text="Light" />
+                        <MenuItem fx:id="themeBlack" mnemonicParsing="false" text="Black" />
+                        <MenuItem fx:id="themePink" mnemonicParsing="false" text="Pink" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">

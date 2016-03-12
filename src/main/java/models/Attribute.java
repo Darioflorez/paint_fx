@@ -2,7 +2,6 @@ package models;
 
 
 import enums.ShapeType;
-import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 

@@ -11,8 +11,8 @@ Användaren ska kunna rita olika typer av objekt:
 Genom att välja typ från en meny eller knappsats.
 
 Användaren ska kunna välja ett objekt för att:
-* Ta bort
-* Ändra egenskaper
+* ~~Ta bort~~
+* ~~Ändra egenskaper~~
 
 Objekt egenskaper:
 * ~~Färg~~
@@ -38,7 +38,7 @@ Designmönster att använda:
 * Template-metoder
 * ~~Facade, t.ex. för att dölja komplexitet i modellen~~
 * ~~Någon form av skapelsemönster för att skapa de ritbara objekten, ex. Prototype~~
-* Någon form av automatisk uppdatering av de knappar eller menyalternativ utifrån vilka
+* ~~Någon form av automatisk uppdatering av de knappar eller menyalternativ utifrån vilka
 ritbara typer som finns i modellen (t.ex. genom att undersöka vilka abstract factory-metoder
-som finns i modellen)
+som finns i modellen)~~
 

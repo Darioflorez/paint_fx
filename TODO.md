@@ -34,10 +34,10 @@ De ska vara relativt enkelt att lägga till nya
 Designmönster att använda:
 * ~~Model-View-Controller (separata paket för de olika delarna)~~
 * Subject-Observer, t.ex. för att uppdatera olika delvyer då modellen ändrats
-* Command för att implementera undo/redo-funktionalitet
+* ~~Command för att implementera undo/redo-funktionalitet~~
 * Template-metoder
 * ~~Facade, t.ex. för att dölja komplexitet i modellen~~
-* Någon form av skapelsemönster för att skapa de ritbara objekten, ex. Prototype
+* ~~Någon form av skapelsemönster för att skapa de ritbara objekten, ex. Prototype~~
 * Någon form av automatisk uppdatering av de knappar eller menyalternativ utifrån vilka
 ritbara typer som finns i modellen (t.ex. genom att undersöka vilka abstract factory-metoder
 som finns i modellen)

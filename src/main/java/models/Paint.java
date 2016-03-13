@@ -40,11 +40,10 @@ public class Paint implements CommandHandler{
     }
 
     public void drawOnCanvas(Attribute attr){
-        if(attr.getType() == null){
-            return;
+        if(attr.getType() != null){
+            Shape shape = ShapeFactory.getShape(attr);
+            shape.draw(gc);
         }
-        Shape shape = ShapeFactory.getShape(attr);
-        shape.draw(gc);
     }
 
     @Override
@@ -80,9 +79,9 @@ public class Paint implements CommandHandler{
     public void redo() {
         if(stackRedo.size() > 0){
             List<Attribute> oldState = new ArrayList<>(stackRedo.pop());
-            updateCanvas(oldState);
             updateCurrentList(oldState);
-            submitToStack(oldState);
+            updateCanvas(getCurrentList());
+            submitToStack(getCurrentList());
         } else {
             Log.i("STACK REDO EMPTY!");
         }
@@ -130,9 +129,11 @@ public class Paint implements CommandHandler{
                     submitToStack(getCurrentList());
                     stackRedo = new Stack<>();
                     break;
+
                 }
             }
         }
+
     }
 
     public void delete(double x, double y){
@@ -149,6 +150,7 @@ public class Paint implements CommandHandler{
                 }
             }
         }
+
     }
 
     private void updateCanvas(List<Attribute> shapeList){

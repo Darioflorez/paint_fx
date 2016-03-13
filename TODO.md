@@ -35,7 +35,7 @@ Designmönster att använda:
 * ~~Model-View-Controller (separata paket för de olika delarna)~~
 * Subject-Observer, t.ex. för att uppdatera olika delvyer då modellen ändrats
 * ~~Command för att implementera undo/redo-funktionalitet~~
-* Template-metoder
+* ~~Template-metoder~~
 * ~~Facade, t.ex. för att dölja komplexitet i modellen~~
 * ~~Någon form av skapelsemönster för att skapa de ritbara objekten, ex. Prototype~~
 * ~~Någon form av automatisk uppdatering av de knappar eller menyalternativ utifrån vilka

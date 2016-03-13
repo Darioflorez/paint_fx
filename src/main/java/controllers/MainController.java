@@ -2,6 +2,7 @@ package controllers;
 
 import command.*;
 import enums.ShapeType;
+import facade.InputHandler;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -70,10 +71,12 @@ public class MainController implements Initializable {
     private Button buttonRedo;
 
     private Paint paint;
-    public Attribute attr;
+    private Attribute attr;
 
-    public boolean fill;
-    public boolean delete;
+    private boolean fill;
+    private boolean delete;
+
+    private InputHandler inputHandler;
 
     public void initialize(URL location, ResourceBundle resources) {
         // initialize your logic here: all @FXML variables will have been injected
@@ -104,8 +107,6 @@ public class MainController implements Initializable {
         canvasHolder.getStyleClass().add("main_panel");
         // Add css to uiComponents
         paneCanvas.getStyleClass().add("canvas");
-
-        //Main.main(new String [1]);
     }
 
     private void initDefaultValues(){
@@ -123,46 +124,23 @@ public class MainController implements Initializable {
 
         this.fill =false;
         this.delete =false;
+        inputHandler = new InputHandler();
     }
 
     //================================ Actions ================================
     private void initHandlers(){
 
         // Register the action handlers here
-        // ===================UNDO AND REDO===========================
-        themeLight.setOnAction(event -> {
-            Main.main(new String[] {Themes.THEME_LIGHT});
-        });
-        themeBlack.setOnAction(event -> {
-            Main.main(new String[] {Themes.THEME_BLACK});
-        });
-        themePink.setOnAction(event -> {
-            Main.main(new String[] {Themes.THEME_PINK});
+        // ==========================Tools===========================
+        buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            toogleFill();
+            Log.i("Button FILL Clicked: " + fill);
         });
 
-        // ===================UNDO AND REDO===========================
-        buttonUndo.setOnAction(event -> {
-            Log.i("UNDO COMMAND!");
-            Undo undo = new Undo(paint);
-            new CommitButton(undo).press();
-        });
-
-        buttonRedo.setOnAction(event -> {
-            Log.i("REDO COMMAND!");
-            Redo redo = new Redo(paint);
-            new CommitButton(redo).press();
-        });
-
-        // ===================SAVE AND LOAD===========================
-        buttonSave.setOnAction(event -> {
-            Log.i("Button SAVE Clicked!");
-            Save save = new Save(paint);
-            new CommitButton(save).press();
-        });
-        buttonLoad.setOnAction(event -> {
-            Log.i("Button LOAD Clicked!");
-            LoadCanvas loadCanvas = new LoadCanvas(paint);
-            new CommitButton(loadCanvas).press();
+        buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            toogleDelete();
+            fill = false;
+            Log.i("Button Delete Clicked: " + delete);
         });
         // ========================Color picker========================
         colorPickerStroke.setOnAction(event -> {
@@ -175,51 +153,69 @@ public class MainController implements Initializable {
             Log.i("Color Fill: " + attr.getColorFill());
         });
 
-        // ==========================Tools===========================
-        buttonFill.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            toogleFill();
-            Log.i("Button FILL Clicked: " + fill);
-        });
-
-        buttonDelete.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            toogleDelete();
-            fill = false;
-            Log.i("Button Delete Clicked: " + delete);
-        });
-
         // ======================== ChoiceBox =============================
-        //choiceBoxLine.setItems(FXCollections.observableArrayList(lineSize));
         choiceBoxLine.valueProperty().addListener((observable, oldValue, newValue) -> {
             Log.i("LINE WIDTH: " + newValue);
             attr.setLineWidth(newValue);
         });
 
-        //choiceBoxShapes.setItems(FXCollections.observableArrayList(ShapeType.values()));
         choiceBoxShapes.valueProperty().addListener((observable, oldValue, newValue) -> {
             Log.i("SHAPE SELECTED: " + newValue.toString());
             fill = false;
             attr.setType(newValue);
         });
 
+        // ======================== Actions =================================
+
+        // ===================UNDO AND REDO===========================
+        buttonUndo.setOnAction(event -> {
+            Log.i("UNDO COMMAND!");
+            Undo undoCommand = new Undo(paint);
+            inputHandler.undo(undoCommand);
+        });
+
+        buttonRedo.setOnAction(event -> {
+            Log.i("REDO COMMAND!");
+            Redo redoCommand = new Redo(paint);
+            inputHandler.redo(redoCommand);
+        });
+
+        // ===================SAVE AND LOAD===========================
+        buttonSave.setOnAction(event -> {
+            Log.i("Button SAVE Clicked!");
+            Save saveCommand = new Save(paint);
+            inputHandler.save(saveCommand);
+        });
+        buttonLoad.setOnAction(event -> {
+            Log.i("Button LOAD Clicked!");
+            LoadCanvas loadCanvasCommand = new LoadCanvas(paint);
+            inputHandler.load(loadCanvasCommand);
+        });
+
         // ======================== Canvas =================================
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//                double x = event.getX();
-//                double y = event.getY();
+
             if(delete){
                 Log.i("DELETE SHAPE!");
-                paint.delete(event.getX(), event.getY());
+                Command deleteCommand = new Delete(paint,event.getX(), event.getY());
+                inputHandler.delete(deleteCommand);
                 delete = false;
             }
             else if(fill){
                 Log.i("FILL SHAPE!");
-                paint.fill(event.getX(), event.getY(),
-                        attr.getColorFill(), attr.getLineWidth());
+                Command updateShapeCommand =
+                        new UpdateShape(paint,event.getX(), event.getY(),
+                        attr.getColorFill(), attr.getLineWidth() );
+                inputHandler.updateShape(updateShapeCommand);
+                fill = false;
             }
             else{
                 Log.i("DRAW ON CANVAS!");
                 attr.setX(event.getX());
                 attr.setY(event.getY());
-                paint.draw(attr);
+
+                Draw drawCommand = new Draw(paint, attr);
+                inputHandler.draw(drawCommand);
             }
         });
 //        uiComponents.addEventHandler(MouseEvent.MOUSE_DRAGGED,
